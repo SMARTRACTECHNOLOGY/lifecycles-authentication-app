@@ -1,11 +1,12 @@
 export default class Core {
 
-  constructor(base){
+  constructor(base, mapping){
     this.base = base;
+    this.mapping = mapping;
   }
 
   authenticate(){
-    
+
   }
 
   get(){

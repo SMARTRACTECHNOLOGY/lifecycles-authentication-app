@@ -2,14 +2,15 @@ import Core from './core';
 
 export default class HTTP extends Core {
 
-  constructor(){
-    super();
+  constructor(base, mapping){
+    super(base, mapping);
     this.meta = {
       token: undefined
     };
   }
 
-  authenticate(username, password){
+  authenticate = (username, password) => {
+    const url = this.mapping['authenticate'];
     return new Promise((resolve, reject) => {
       const session = {
         access_token: 'some_token_i_will_use'

@@ -17,9 +17,10 @@ import { HTTP } from './backends';
 
 class Databroker {
 
-  constructor(type, base){
+  constructor(type, base, mapping){
     this.type = type || 'http';
     this.base = base || '/';
+    this.mapping = mapping || {};
     this.backend = this._configure();
   }
 
@@ -29,7 +30,7 @@ class Databroker {
   _configure = () => {
     switch(this.type){
       case 'http':
-        return new HTTP(this.base);
+        return new HTTP(this.base, this.mapping);
       default:
         console.warn('No backend support for type:', this.type);
     }

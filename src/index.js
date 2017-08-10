@@ -11,20 +11,28 @@ const connect = (context, WrappedComponent) => {
   }
 }
 
+const withGlobals = (
+  connect.bind(this, {
+    databroker: new Databroker('http', '/', {
+      authenticate: '/oauth',
+      get: '/rest',
+      put: '/rest',
+      delete: '/rest',
+      query: '/rest'
+    })
+  })
+);
+
 export default class LifecyclesAuthScan extends Component {
 
   constructor(){
     super();
-    const context = {
-      databroker: new Databroker('http', '/')
-    };
     this.routeConfig = {
-      Auth: { screen: connect(context, AuthScreen) },
-      Scan: { screen: connect(context, ScanScreen) },
-      Display: { screen: connect(context, ScanDisplayScreen) }
+      Auth: { screen: withGlobals(AuthScreen) },
+      Scan: { screen: withGlobals(ScanScreen) },
+      Display: { screen: withGlobals(ScanDisplayScreen) }
     };
   }
-
 
   render() {
     return (
