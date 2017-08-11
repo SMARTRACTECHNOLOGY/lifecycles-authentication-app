@@ -1,27 +1,8 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StyleSheet, TextInput, View } from 'react-native';
-import { Button, Login, Screen } from '../components';
-import theme from '../theme';
-
-const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: theme.color.darkBackground
-  },
-  loading: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 2
-  },
-  login: {
-    height: '100%',
-    width: '100%',
-    zIndex: 1
-  }
-});
+import { ActivityIndicator, AsyncStorage, TextInput, View } from 'react-native';
+import { Button, Login, Screen } from '../../components';
+import theme from '../../theme';
+import styles from './styles';
 
 export default class AuthScreen extends React.Component {
 

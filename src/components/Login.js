@@ -135,7 +135,6 @@ export default class Login extends React.Component {
         }
         <TextInput
           style={ styles.input }
-          autoFocus={ true }
           placeholder="Username"
           placeholderTextColor={ theme.color.gray }
           onChangeText={ this.handleTextChange.bind(this, 'username') }

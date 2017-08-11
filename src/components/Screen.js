@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     top: 0,
-    width: '100%'
+    width: '100%',
+    zIndex: 9999
   },
   header__inner: {
     display: 'flex',
