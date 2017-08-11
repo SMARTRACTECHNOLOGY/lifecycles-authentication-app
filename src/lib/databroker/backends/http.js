@@ -26,6 +26,8 @@ export default class HTTP {
     if(status >= 200 && status < 300) {
       return response[status == 204 ? "text" : "json"](); // eslint-disable-line eqeqeq
     } else if(status === 401){
+      // Set token undefined if `Unauthorized`
+      this.jwt = undefined;
       throw new Error(this.errorCodes[status]);
     } else if(status === 400){
       return (
@@ -89,6 +91,13 @@ export default class HTTP {
   logout = () => {
     return new Promise(function(resolve, reject) {
       this.jwt = undefined;
+      resolve(true);
+    });
+  }
+
+  authenticateToken = (jwt) => {
+    return new Promise(function(resolve, reject) {
+      this.jwt = jwt;
       resolve(true);
     });
   }

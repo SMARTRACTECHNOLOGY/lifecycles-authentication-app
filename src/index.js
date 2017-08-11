@@ -19,6 +19,7 @@ const connect = (context, WrappedComponent) => {
 */
 const withGlobals = (
   connect.bind(this, {
+    storageKey: '@smartrac-lifecycles-auth-app:appState',
     databroker: new Databroker({
       type: 'http',
       base: process.env.base || 'https://beta.lifecycles.io',

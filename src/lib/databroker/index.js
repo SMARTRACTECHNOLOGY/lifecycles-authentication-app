@@ -35,6 +35,9 @@ class Databroker {
   }
 
   // Public API
+  authenticateToken(token){
+    return this.backend.authenticateToken(token);
+  }
 
   authenticate(username, password){
     return this.backend.authenticate(username, password);

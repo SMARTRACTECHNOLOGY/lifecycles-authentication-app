@@ -27,7 +27,6 @@ export default class AuthScreen extends React.Component {
 
   constructor(props){
     super(props);
-    this.savedUsernameKey = 'saved-username';
     this.state = {
       error: undefined,
       username: '',
@@ -36,7 +35,6 @@ export default class AuthScreen extends React.Component {
   }
 
   handleAuthenicationError = (err) => {
-    console.log('error goes here');
     this.setState({
       error: 'Invalid username or password',
       isAuthenticating: false
@@ -49,8 +47,7 @@ export default class AuthScreen extends React.Component {
       isAuthenticating: false
     });
     this.props.navigation.navigate('Scan');
-    // save username for future usage
-    AsyncStorage.setItem(this.savedUsernameKey, username);
+    AsyncStorage.setItem(this.props.storageKey, JSON.stringify({ username, jwt }));
   }
 
   signIn = (username, password) => {
@@ -64,10 +61,22 @@ export default class AuthScreen extends React.Component {
       .catch(this.handleAuthenicationError)
   }
 
+  loadStorage = () => {
+    AsyncStorage.getItem(this.props.storageKey)
+      .then((data) => {
+        if(data){
+          const parsedData = JSON.parse(data);
+          if(parsedData.jwt){
+            this.props.databroker.authenticateToken(parsedData.jwt);
+            this.props.navigation.navigate('Scan');
+          }
+          this.setState(parsedData);
+        }
+      })
+  }
+
   componentDidMount(){
-    AsyncStorage.getItem(this.savedUsernameKey)
-      .then((username) => this.setState({ username }))
-      .done();
+    this.loadStorage();
   }
 
   render(){

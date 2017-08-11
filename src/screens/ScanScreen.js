@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Button, Image, StyleSheet, View } from 'react-native';
 import { NavHeader, Screen } from '../components';
 import theme from '../theme';
 
@@ -21,10 +21,15 @@ export default class ScanScreen extends React.Component {
 
   handleLogout = () => {
     this.props.databroker.logout()
-      .then((loggedOut) => {
-        if(loggedOut){
-          this.props.navigation.navigate('Auth');
-        }
+      .then(() => {
+        const navigateToAuth = () => this.props.navigation.navigate('Auth');
+        AsyncStorage.getItem(this.props.storageKey, (err, result) => {
+          // Remove jwt from storage but keep everything else
+          const { jwt, ...rest } = JSON.parse(result);
+          AsyncStorage.setItem(this.props.storageKey, JSON.stringify(rest))
+            .then(navigateToAuth)
+            .catch(() => AsyncStorage.clear().then(navigateToAuth))
+        });
       });
   }
 
