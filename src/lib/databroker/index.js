@@ -17,22 +17,20 @@ import { HTTP } from './backends';
 
 class Databroker {
 
-  constructor(type, base, mapping){
-    this.type = type || 'http';
-    this.base = base || '/';
-    this.mapping = mapping || {};
-    this.backend = this._configure();
+  constructor(opts){
+    this.opts = opts;
+    this.backend = this.configure();
   }
 
   /*
   * Given the `type` set up the infrastructure for requests of that type and base
   */
-  _configure = () => {
-    switch(this.type){
+  configure = () => {
+    switch(this.opts.type){
       case 'http':
-        return new HTTP(this.base, this.mapping);
+        return new HTTP(this.opts);
       default:
-        console.warn('No backend support for type:', this.type);
+        console.warn('No backend support for type:', this.opts.type);
     }
   }
 
@@ -56,6 +54,10 @@ class Databroker {
 
   query(term){
     return this.backend.query(term);
+  }
+
+  logout(){
+    return this.backend.logout();
   }
 
 }
