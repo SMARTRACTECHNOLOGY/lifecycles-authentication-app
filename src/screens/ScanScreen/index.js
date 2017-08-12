@@ -8,7 +8,7 @@ export default class ScanScreen extends React.Component {
 
   constructor(props){
     super(props);
-    this.simulate = true;
+    this.simulate = false;
     this.bound = false;
   }
 
@@ -23,7 +23,6 @@ export default class ScanScreen extends React.Component {
       const records = data[dataIndex];
       for (let recordIndex in records) {
         const { type, data } = records[recordIndex];
-        console.log('read ndef tag', id, type, data);
         if (type === NdefRecordType.TEXT) {
           this.navigateToScanDisplay(JSON.parse(data));
         } else {
