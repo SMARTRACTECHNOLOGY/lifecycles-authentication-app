@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Databroker from './lib/databroker';
 import { Navigator } from './routing';
-import { AuthScreen, ScanScreen, ScanDisplayScreen } from './screens';
+import { AuthScreen, ScanScreen, ScanDisplayScreen, SplashScreen } from './screens';
 
 /*
 * Higher-order component that passes in a context mapping
@@ -24,11 +24,12 @@ const withGlobals = (
       type: 'http',
       base: process.env.base || 'https://beta.lifecycles.io',
       mapping: {
-        authenticate: process.env.auth || '/oauth/token?grant_type=password&scope=read',
-        get: process.env.api || '/rest',
-        put: process.env.api || '/rest',
-        delete: process.env.api || '/rest',
-        query: process.env.api || '/rest'
+        status: '/users/me',
+        authenticate: '/oauth/token?grant_type=password&scope=read',
+        get: '/rest',
+        put: '/rest',
+        delete: '/rest',
+        query: '/rest'
       },
       clientToken: process.env.client || 'smartcosmosservice:9HhnNDhfGEXfNEn6'
     })
@@ -40,6 +41,7 @@ export default class LifecyclesAuthScan extends Component {
   constructor(){
     super();
     this.routeConfig = {
+      Splash: { screen: withGlobals(SplashScreen) },
       Auth: { screen: withGlobals(AuthScreen) },
       Scan: { screen: withGlobals(ScanScreen) },
       Display: { screen: withGlobals(ScanDisplayScreen) }

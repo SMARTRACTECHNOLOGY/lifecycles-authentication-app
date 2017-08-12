@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, TextInput, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, Keyboard, TextInput, View } from 'react-native';
 import { Button, Login, Screen } from '../../components';
 import theme from '../../theme';
 import styles from './styles';
@@ -27,8 +27,15 @@ export default class AuthScreen extends React.Component {
       error: undefined,
       isAuthenticating: false
     });
-    this.props.navigation.navigate('Scan');
-    AsyncStorage.setItem(this.props.storageKey, JSON.stringify({ username, jwt }));
+    // Store session information and proceed to `Scan` screen
+    const appState = JSON.stringify({ username, jwt });
+    AsyncStorage.setItem(this.props.storageKey, appState)
+      .then(() => {
+        // Remove keyboard from view
+        Keyboard.dismiss();
+        // Navigate to the scan screen
+        this.props.navigation.navigate('Scan');
+      });
   }
 
   signIn = (username, password) => {
@@ -42,22 +49,10 @@ export default class AuthScreen extends React.Component {
       .catch(this.handleAuthenicationError)
   }
 
-  loadStorage = () => {
-    AsyncStorage.getItem(this.props.storageKey)
-      .then((data) => {
-        if(data){
-          const parsedData = JSON.parse(data);
-          if(parsedData.jwt){
-            this.props.databroker.authenticateToken(parsedData.jwt);
-            this.props.navigation.navigate('Scan');
-          }
-          this.setState(parsedData);
-        }
-      })
-  }
-
   componentDidMount(){
-    this.loadStorage();
+    if(this.props.navigation.state.params){
+      this.setState({ username: this.props.navigation.state.params.username})
+    }
   }
 
   render(){

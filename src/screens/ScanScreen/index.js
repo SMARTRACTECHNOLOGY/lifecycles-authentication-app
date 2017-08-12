@@ -4,13 +4,15 @@ import NFC, { NfcDataType, NdefRecordType } from 'react-native-nfc';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
 
+const simulateNfcTap = true;
+
 export default class ScanScreen extends React.Component {
 
   navigateToScanDisplay = () => {
     this.props.navigation.navigate('Display');
   }
 
-  handleNdef (payload) {
+  handleNdef(payload) {
     const { data, id } = payload;
     for (const dataIndex in data) {
       const records = data[dataIndex];
@@ -31,7 +33,7 @@ export default class ScanScreen extends React.Component {
     }
   }
 
-  bindNfcListener () {
+  bindNfcListener() {
     NFC.addListener('NFC_CHIP', (payload) => {
       switch (payload.type) {
         case NfcDataType.NDEF:
@@ -45,7 +47,12 @@ export default class ScanScreen extends React.Component {
     });
   }
 
-  componentDidMount () {
+  simulateTap = () => {
+    const enablementId = 1234;
+    console.log('look up skumapping data', this.props.databroker);
+  }
+
+  componentDidMount() {
     this.bindNfcListener();
   }
 
@@ -65,6 +72,14 @@ export default class ScanScreen extends React.Component {
         <View style={ styles.help }>
           <Text style={ styles.help__text }>TAP NFC</Text>
         </View>
+        {
+          simulateNfcTap &&
+            <Button
+              style={ styles.simulateTap }
+              title="Simulate"
+              onPress={ this.simulateTap }
+            />
+        }
       </Screen>
     );
   }

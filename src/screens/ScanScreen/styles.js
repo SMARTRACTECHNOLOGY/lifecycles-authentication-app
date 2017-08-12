@@ -34,10 +34,16 @@ const styles = StyleSheet.create({
     zIndex: 2
   },
   help__text: {
-    fontSize: 64,
+    fontSize: 72,
     color: theme.color.primary,
-    opacity: 0.8,
+    opacity: 0.3,
     fontWeight: '300'
+  },
+  simulateTap: {
+    position: 'absolute',
+    bottom: 50,
+    width: '100%',
+    zIndex: 3
   }
 });
 

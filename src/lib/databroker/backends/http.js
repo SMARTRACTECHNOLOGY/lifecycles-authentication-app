@@ -89,17 +89,31 @@ export default class HTTP {
   }
 
   logout = () => {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       this.jwt = undefined;
       resolve(true);
     });
   }
 
-  authenticateToken = (jwt) => {
-    return new Promise(function(resolve, reject) {
-      this.jwt = jwt;
-      resolve(true);
-    });
+  // Check token against pinging endpoint
+  status = (jwt) => {
+    if(!jwt){
+      return Promise.reject(new Error('jwt was undefined.'))
+    }
+    return (
+      this.request(this.constructUrl('status'), {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          authorization: `Bearer ${ jwt.access_token }`
+        }
+      })
+      .then((data) => {
+        this.jwt = jwt;
+        return jwt;
+      })
+    );
   }
 
   authenticate = (username, password) => {

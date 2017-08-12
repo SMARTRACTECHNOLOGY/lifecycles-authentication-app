@@ -42,10 +42,10 @@ export default class  NavHeader extends React.Component {
   handleLogout = () => {
     this.props.databroker.logout()
       .then(() => {
-        const navigateToAuth = () => this.props.navigation.navigate('Auth');
         AsyncStorage.getItem(this.props.storageKey, (err, result) => {
           // Remove jwt from storage but keep everything else
           const { jwt, ...rest } = JSON.parse(result);
+          const navigateToAuth = () => this.props.navigation.navigate('Auth', { username: rest.username });
           AsyncStorage.setItem(this.props.storageKey, JSON.stringify(rest))
             .then(navigateToAuth)
             .catch(() => AsyncStorage.clear().then(navigateToAuth))
