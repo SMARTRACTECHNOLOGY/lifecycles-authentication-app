@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, Keyboard, TextInput, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, TextInput, View } from 'react-native';
 import { Button, Login, Screen } from '../../components';
 import theme from '../../theme';
 import styles from './styles';
@@ -31,8 +31,6 @@ export default class AuthScreen extends React.Component {
     const appState = JSON.stringify({ username, jwt });
     AsyncStorage.setItem(this.props.storageKey, appState)
       .then(() => {
-        // Remove keyboard from view
-        Keyboard.dismiss();
         // Navigate to the scan screen
         this.props.navigation.navigate('Scan');
       });

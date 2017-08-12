@@ -1,15 +1,20 @@
 import React from 'react';
-import { AsyncStorage, Image, Text, ToastAndroid, View } from 'react-native';
+import { AsyncStorage, Image, Keyboard, Text, ToastAndroid, View } from 'react-native';
 import NFC, { NfcDataType, NdefRecordType } from 'react-native-nfc';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
 
-const simulateNfcTap = true;
-
 export default class ScanScreen extends React.Component {
 
-  navigateToScanDisplay = () => {
-    this.props.navigation.navigate('Display');
+  constructor(props){
+    super(props);
+    this.simulate = true;
+    this.bound = false;
+  }
+
+  navigateToScanDisplay = (data) => {
+    this.props.navigation.navigate('Display', { data });
+    NFC.removeListener('NFC_CHIP');
   }
 
   handleNdef(payload) {
@@ -20,12 +25,7 @@ export default class ScanScreen extends React.Component {
         const { type, data } = records[recordIndex];
         console.log('read ndef tag', id, type, data);
         if (type === NdefRecordType.TEXT) {
-          try {
-            NFC.removeListener('NFC_CHIP');
-            this.navigateToScan({ id, data });
-          } catch (e) {
-            this.navigateToScan({ id, data });
-          }
+          this.navigateToScanDisplay(JSON.parse(data));
         } else {
           ToastAndroid.show(`Non-TEXT tag of type ${type} with data ${data}`, ToastAndroid.SHORT);
         }
@@ -45,15 +45,21 @@ export default class ScanScreen extends React.Component {
           break;
       }
     });
+    this.bound = true;
   }
 
   simulateTap = () => {
-    const enablementId = 1234;
-    console.log('look up skumapping data', this.props.databroker);
+    this.navigateToScanDisplay({
+      sku: 123456789
+    });
   }
 
   componentDidMount() {
-    this.bindNfcListener();
+    // Remove keyboard from view just in case its up
+    Keyboard.dismiss();
+    if(!this.bound){
+      this.bindNfcListener();
+    }
   }
 
   render(){
@@ -73,7 +79,7 @@ export default class ScanScreen extends React.Component {
           <Text style={ styles.help__text }>TAP NFC</Text>
         </View>
         {
-          simulateNfcTap &&
+          this.simulate &&
             <Button
               style={ styles.simulateTap }
               title="Simulate"

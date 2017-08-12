@@ -24,7 +24,7 @@ export default class HTTP {
   checkStatus = (response) => {
     const status = response.status;
     if(status >= 200 && status < 300) {
-      return response[status == 204 ? "text" : "json"](); // eslint-disable-line eqeqeq
+      return response[status == 204 ? "text" : "json"]();
     } else if(status === 401){
       // Set token undefined if `Unauthorized`
       this.jwt = undefined;
@@ -74,6 +74,27 @@ export default class HTTP {
     );
   }
 
+  setJwt = (jwt) => {
+    this.jwt = jwt;
+    return jwt;
+  }
+
+  tokenHeaders = () => {
+    return {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      authorization: `Basic ${ this.clientToken }`
+    };
+  }
+
+  authorizedHeaders = () => {
+    return {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      authorization: `Bearer ${ this.jwt.access_token }`
+    };
+  }
+
   constructUrl = (requestType) => {
     return `${ this.base }${ this.mapping[requestType] }`
   }
@@ -109,10 +130,7 @@ export default class HTTP {
           authorization: `Bearer ${ jwt.access_token }`
         }
       })
-      .then((data) => {
-        this.jwt = jwt;
-        return jwt;
-      })
+      .then(this.setJwt.bind(this, jwt))
     );
   }
 
@@ -124,34 +142,35 @@ export default class HTTP {
     return (
       this.request(`${ this.constructUrl('authenticate') }${ this.urlParams(params) }`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          authorization: `Basic ${ this.clientToken }`
-        }
+        headers: this.tokenHeaders()
       })
-      .then((jwt) => {
-        // Store jwt internally to use for future requests
-        this.jwt = jwt;
-        return jwt;
+      .then(this.setJwt)
+    );
+  }
+
+  get = (action, params) => {
+    return (
+      this.request(`${ this.constructUrl('get') }/${ action }`, {
+        method: 'POST',
+        headers: this.authorizedHeaders(),
+        body: JSON.stringify({
+          ...params,
+          action
+        })
       })
     );
   }
 
-  get = () => {
-    console.log('calling http get method', this.meta);
-  }
-
   put = () => {
-    console.log('calling http put method', this.meta);
+    console.error('TODO: Implement');
   }
 
   delete = () => {
-    console.log('calling http delete method', this.meta);
+    console.error('TODO: Implement');
   }
 
   query = () => {
-    console.log('calling http query method', this.meta);
+    console.error('TODO: Implement');
   }
 
 }
