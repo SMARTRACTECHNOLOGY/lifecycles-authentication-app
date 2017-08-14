@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, ListView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button, NavHeader, Screen } from '../../components';
 import theme from '../../theme';
 import styles from './styles';
@@ -9,7 +9,7 @@ export default class ScanDisplayScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      isLoading: false,
+      isLoading: true,
       data: undefined,
       error: undefined
     };
@@ -26,30 +26,41 @@ export default class ScanDisplayScreen extends React.Component {
     });
   }
 
-  handleLoadingSuccess = ({ success, data }) => {
-    if(success){
-      this.setState({
-        isLoading: false,
-        data
-      });
-    } else {
-      this.setState({
-        isLoading: false,
-        error: 'There was an error processing the request.'
-      });
-    }
+  handleLoadingSuccess = ([skus, products]) => {
+    const { data: skuData } = skus;
+    const { data: productData } = products;
+    const scannedData = this.props.navigation.state.params.data;
+    //const currentSku = data.filter(({ code }) => scannedData.sku)[0];
+    const relatedProduct = productData[0];//productData.filter(({ id }) => currentSku.productId === id);
+    this.setState({
+      isLoading: false,
+      data: {
+        code: '123456789',
+        product: relatedProduct,
+        metadata: [{
+          key_name: 'color',
+          value: 'Black'
+        },
+        {
+          key_name: 'size',
+          value: '8'
+        },
+        {
+          key_name: 'style',
+          value: 'Thick'
+        }]
+      }
+    });
   }
 
   loadScanData = () => {
-    const { databroker, navigation } = this.props;
-    const scanData = navigation.state.params.data;
-    const params = {
-      id: scanData.sku
-    };
+    const { databroker } = this.props;
+    const promises = [databroker.get('skumapping_list'), databroker.get('product_list')];
     this.setState({ isLoading: true });
-    databroker.get('product_list', {})
+    // Run promises concurrently
+    Promise.all(promises)
       .then(this.handleLoadingSuccess)
-      .catch(this.handleLoadingError);
+      .catch(this.handleLoadingError)
   }
 
   componentDidMount(){
@@ -58,6 +69,7 @@ export default class ScanDisplayScreen extends React.Component {
 
   render(){
     const { data, isLoading } = this.state;
+    const { sku } = this.props.navigation.state.params.data;
     const loadingDisplay = isLoading ? 'flex' : 'none';
     return (
       <Screen
@@ -72,9 +84,44 @@ export default class ScanDisplayScreen extends React.Component {
             size={ theme.loading.size }
           />
         </View>
-        <ScrollView style={ styles.data }>
-          <Text>{ JSON.stringify(data) }</Text>
-        </ScrollView>
+        {
+          !isLoading && data ?
+            <ScrollView style={ styles.data }>
+              <Text style={ styles.sku }>SKU: { sku }</Text>
+              <View style={ styles.product }>
+                <Image
+                  source={{ uri: data.product.imageUrl }}
+                  style={ styles.product__image }
+                />
+                <View style={ styles.product__info }>
+                  <Text style={ styles.info__name }>
+                    { data.product.name }
+                  </Text>
+                  <Text style={ styles.info__description }>
+                    { data.product.description }
+                  </Text>
+                </View>
+              </View>
+              <View style={ styles.metadata }>
+                <Text style={ styles.details }>Details</Text>
+                {
+                  data.metadata.map(({ key_name, value }) => (
+                    <View
+                      key={ key_name }
+                      style={ styles.metadata__info }
+                    >
+                      <Text style={ styles.metadata__label }>{ key_name }</Text>
+                      <Text style={ styles.metadata__value }>{ value }</Text>
+                    </View>
+                  ))
+                }
+              </View>
+            </ScrollView>
+            :
+            <Text style={ styles.nothing }>
+              No data found for SKU: { sku }
+            </Text>
+        }
         <Button
           style={ styles.button }
           title={ isLoading ? 'Cancel' : 'Scan Another' }

@@ -31,14 +31,19 @@ export default class SplashScreen extends React.Component {
   }
 
   checkJwt = (data) => {
-    const { jwt, username } = JSON.parse(data);
-    if(!jwt){
-      return Promise.reject(username);
+    if(!data){
+      return Promise.reject('');
+    } else {
+      const { jwt, username } = JSON.parse(data);
+      if(!jwt){
+        return Promise.reject(username);
+      } else {
+        return (
+          this.props.databroker.status(jwt)
+            .then(this.setLoggedIn.bind(this, username))
+        )
+      }
     }
-    return (
-      this.props.databroker.status(jwt)
-        .then(this.setLoggedIn.bind(this, username))
-    )
   }
 
   navigateTo = (routeName, params) => {

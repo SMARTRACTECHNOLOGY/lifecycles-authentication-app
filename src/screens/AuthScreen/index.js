@@ -49,6 +49,7 @@ export default class AuthScreen extends React.Component {
 
   componentDidMount(){
     if(this.props.navigation.state.params){
+      console.log('current username!', this.props.navigation.state.params.username);
       this.setState({ username: this.props.navigation.state.params.username})
     }
   }
