@@ -95,8 +95,9 @@ export default class HTTP {
     };
   }
 
-  constructUrl = (requestType) => {
-    return `${ this.base }${ this.mapping[requestType] }`
+  constructUrl = (requestType, opts = {}) => {
+    console.log(opts);
+    return `${ this.base }${ opts.base || this.mapping[requestType] || this.mapping.base }`;
   }
 
   urlParams = (params) => {
@@ -118,6 +119,7 @@ export default class HTTP {
 
   // Check token against pinging endpoint
   status = (jwt) => {
+    console.debug('=== STATUS', jwt);
     if(!jwt){
       return Promise.reject(new Error('jwt was undefined.'))
     }
@@ -135,6 +137,7 @@ export default class HTTP {
   }
 
   authenticate = (username, password) => {
+    console.debug('=== AUTHENTICATE', username);
     const params = {
       username: encodeURIComponent(username),
       password: encodeURIComponent(password)
@@ -148,14 +151,15 @@ export default class HTTP {
     );
   }
 
-  get = (action, params) => {
+  get = (action, params, opts) => {
+    console.debug('=== GET', action, params, opts, `${this.constructUrl('get', opts)}/${action}`);
     return (
-      this.request(`${ this.constructUrl('get') }/${ action }`, {
+      this.request(`${this.constructUrl('get', opts)}/${action}`, {
         method: 'POST',
         headers: this.authorizedHeaders(),
         body: JSON.stringify({
-          ...params,
-          action
+          action,
+          ...params
         })
       })
     );

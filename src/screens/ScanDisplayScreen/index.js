@@ -13,53 +13,48 @@ export default class ScanDisplayScreen extends React.Component {
       data: undefined,
       error: undefined
     };
+    this.errors = {
+      fetch: 'There was an error fetching the tag metadata. Please Try Again.'
+    };
   }
 
   navigateToScan = () => {
     this.props.navigation.navigate('Scan');
   }
 
-  handleLoadingError = (err) => {
+  handleLoadingError = (error) => {
     this.setState({
       isLoading: false,
-      error: err.message
+      data: undefined,
+      error: this.errors.fetch
     });
   }
 
-  handleLoadingSuccess = ([skus, products]) => {
-    const { data: skuData } = skus;
-    const { data: productData } = products;
-    const scannedData = this.props.navigation.state.params.data;
-    //const currentSku = data.filter(({ code }) => scannedData.sku)[0];
-    const relatedProduct = productData[0];//productData.filter(({ id }) => currentSku.productId === id);
-    this.setState({
-      isLoading: false,
-      data: {
-        code: '123456789',
-        product: relatedProduct,
-        metadata: [{
-          key_name: 'color',
-          value: 'Black'
-        },
-        {
-          key_name: 'size',
-          value: '8'
-        },
-        {
-          key_name: 'style',
-          value: 'Thick'
-        }]
+    handleLoadingSuccess = (code, { data, success }) => {
+      if(!success){
+        this.setState({
+          isLoading: false,
+          data: undefined,
+          error: this.errors.fetch
+        });
+      } else {
+        const hasData = typeof data[code] !== 'undefined' && data[code].length > 0
+        this.setState({
+          isLoading: false,
+          data: hasData ? {
+            code,
+            metadata: data[code]
+          } : undefined,
+          error: undefined
+        });
       }
-    });
   }
 
   loadScanData = () => {
-    const { databroker } = this.props;
-    const promises = [databroker.get('skumapping_list'), databroker.get('product_list')];
-    this.setState({ isLoading: true });
-    // Run promises concurrently
-    Promise.all(promises)
-      .then(this.handleLoadingSuccess)
+    // Retrieve tag metadata for tag, override the base service url since its not `/rest` for some reason
+    const code = this.props.navigation.state.params.data;
+    this.props.databroker.get('tag_metadata', { data: [code] }, { base: '/tag' })
+      .then(this.handleLoadingSuccess.bind(this, code))
       .catch(this.handleLoadingError)
   }
 
@@ -68,15 +63,12 @@ export default class ScanDisplayScreen extends React.Component {
   }
 
   render(){
-    const { data, isLoading } = this.state;
-    const { sku } = this.props.navigation.state.params.data;
+    const { data, error, isLoading } = this.state;
+    const code = this.props.navigation.state.params.data;
     const loadingDisplay = isLoading ? 'flex' : 'none';
-    return (
-      <Screen
-        id="scan-display-screen"
-        style={ styles.screen }
-        header={ <NavHeader { ...this.props } /> }
-      >
+    const hasData = typeof data !== 'undefined';
+    if(isLoading){
+      return (
         <View style={ [ styles.loading, { display: loadingDisplay }] }>
           <ActivityIndicator
             animating={ isLoading }
@@ -84,43 +76,63 @@ export default class ScanDisplayScreen extends React.Component {
             size={ theme.loading.size }
           />
         </View>
+      )
+    }
+    return (
+      <Screen
+        id="scan-display-screen"
+        style={ styles.screen }
+        header={ <NavHeader { ...this.props } /> }
+      >
         {
-          !isLoading && data ?
+          hasData ?
             <ScrollView style={ styles.data }>
-              <Text style={ styles.sku }>SKU: { sku }</Text>
-              <View style={ styles.product }>
-                <Image
-                  source={{ uri: data.product.imageUrl }}
-                  style={ styles.product__image }
-                />
-                <View style={ styles.product__info }>
-                  <Text style={ styles.info__name }>
-                    { data.product.name }
-                  </Text>
-                  <Text style={ styles.info__description }>
-                    { data.product.description }
-                  </Text>
-                </View>
-              </View>
+              <Text style={ styles.sku }>SKU <Text style={ styles.code }>{ code }</Text></Text>
+              {
+                data.product &&
+                  <View style={ styles.product }>
+                    <Image
+                      source={{ uri: data.product.imageUrl }}
+                      style={ styles.product__image }
+                    />
+                    <View style={ styles.product__info }>
+                      <Text style={ styles.info__name }>
+                        { data.product.name }
+                      </Text>
+                      <Text style={ styles.info__description }>
+                        { data.product.description }
+                      </Text>
+                    </View>
+                  </View>
+              }
               <View style={ styles.metadata }>
                 <Text style={ styles.details }>Details</Text>
                 {
-                  data.metadata.map(({ key_name, value }) => (
-                    <View
-                      key={ key_name }
-                      style={ styles.metadata__info }
-                    >
-                      <Text style={ styles.metadata__label }>{ key_name }</Text>
-                      <Text style={ styles.metadata__value }>{ value }</Text>
-                    </View>
+                  data.metadata.map(({ metadata }) => (
+                    Object.keys(metadata).map(key => (
+                      <View
+                        key={ key }
+                        style={ styles.metadata__info }
+                      >
+                        <Text style={ styles.metadata__label }>{ key }</Text>
+                        <Text style={ styles.metadata__value }>{ metadata[key] }</Text>
+                      </View>
+                    ))
                   ))
                 }
               </View>
             </ScrollView>
             :
-            <Text style={ styles.nothing }>
-              No data found for SKU: { sku }
-            </Text>
+            <View style={ styles.missing }>
+              <Text style={ styles.nothing }>
+                {
+                  !error ?
+                    `No data found for SKU: ${ code }`
+                    :
+                    error
+                }
+              </Text>
+            </View>
         }
         <Button
           style={ styles.button }

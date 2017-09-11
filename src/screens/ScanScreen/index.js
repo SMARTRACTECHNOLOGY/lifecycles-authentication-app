@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, Image, Keyboard, Text, ToastAndroid, View } from 'react-native';
+import { AsyncStorage, Image, Keyboard, Text, ToastAndroid, Vibration, View } from 'react-native';
 import NFC, { NfcDataType, NdefRecordType } from 'react-native-nfc';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
@@ -15,20 +15,28 @@ export default class ScanScreen extends React.Component {
   navigateToScanDisplay = (data) => {
     this.props.navigation.navigate('Display', { data });
     NFC.removeListener('NFC_CHIP');
+    this.bound = false;
   }
 
+  /*
+  * Handles a single NDEF read and an individual record on a tag of type text ref tag metadata
+  */
   handleNdef(payload) {
-    const { data, id } = payload;
-    for (const dataIndex in data) {
-      const records = data[dataIndex];
-      for (let recordIndex in records) {
-        const { type, data } = records[recordIndex];
+    try {
+      const { data, id } = payload;
+      if(data && data.length){
+        const { type, data: code, encoding, locale } = data[0][0];
         if (type === NdefRecordType.TEXT) {
-          this.navigateToScanDisplay(JSON.parse(data));
+          // Add in navigation transition buffer
+          setTimeout(() => this.navigateToScanDisplay(code), 300);
         } else {
-          ToastAndroid.show(`Non-TEXT tag of type ${type} with data ${data}`, ToastAndroid.SHORT);
+          throw new Error(`Error: Tag (${type}, ${encoding}, ${locale}), is unsupported.`);
         }
+      } else {
+        throw new Error('Error: Tag record does not exist.');
       }
+    } catch (error){
+      ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
   }
 
@@ -36,7 +44,8 @@ export default class ScanScreen extends React.Component {
     NFC.addListener('NFC_CHIP', (payload) => {
       switch (payload.type) {
         case NfcDataType.NDEF:
-          ToastAndroid.show(`NFC Tag Detected`, ToastAndroid.SHORT);
+          ToastAndroid.show('NFC Tag Detected', ToastAndroid.SHORT);
+          Vibration.vibrate();
           this.handleNdef(payload);
           break;
         case NfcDataType.TAG:
@@ -47,10 +56,11 @@ export default class ScanScreen extends React.Component {
     this.bound = true;
   }
 
+  /*
+  * STRICTLY FOR DEBUGGING PURPOSES
+  */
   simulateTap = () => {
-    this.navigateToScanDisplay({
-      sku: 123456789
-    });
+    this.navigateToScanDisplay(123456789);
   }
 
   componentDidMount() {

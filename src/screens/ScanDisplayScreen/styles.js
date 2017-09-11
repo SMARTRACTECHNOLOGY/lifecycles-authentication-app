@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 import theme from '../../theme';
 
+const headerHeight = 60;
+
 const styles = StyleSheet.create({
   screen: {
     backgroundColor: theme.color.lightBackground
@@ -19,13 +21,27 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 2,
     padding: 10,
-    marginTop: 60
+    marginTop: headerHeight
+  },
+  missing: {
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    zIndex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: headerHeight
   },
   nothing: {
     height: '100%',
     width: '100%',
-    zIndex: 2,
-    padding: 10
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 100,
+    fontSize: 24,
+    color: theme.color.error,
+    textAlign: 'center'
   },
   button: {
     position: 'absolute',
@@ -33,14 +49,18 @@ const styles = StyleSheet.create({
     zIndex: 3
   },
   sku: {
-    color: theme.color.primary,
-    fontSize: 32,
+    color: theme.color.gray,
+    fontSize: 28,
     marginTop: 10,
     marginBottom: 10
   },
-  details: {
+  code: {
     color: theme.color.primary,
-    fontSize: 32,
+    fontSize: 28
+  },
+  details: {
+    color: theme.color.gray,
+    fontSize: 28,
     marginBottom: 10
   },
   product: {

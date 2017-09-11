@@ -25,6 +25,7 @@ const theme = {
     lightBackground: colors.white,
     darkBackground: colors.darkBlue,
     header: colors.black,
+    error: colors.red,
     ...colors
   },
   loading: {

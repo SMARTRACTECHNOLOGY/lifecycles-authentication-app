@@ -24,12 +24,9 @@ const withGlobals = (
       type: 'http',
       base: process.env.base || 'https://beta.lifecycles.io',
       mapping: {
+        base: '/rest',
         status: '/users/me',
-        authenticate: '/oauth/token?grant_type=password&scope=read',
-        get: '/rest',
-        put: '/rest',
-        delete: '/rest',
-        query: '/rest'
+        authenticate: '/oauth/token?grant_type=password&scope=read'
       },
       clientToken: process.env.client || 'smartcosmosservice:9HhnNDhfGEXfNEn6'
     })

@@ -43,20 +43,20 @@ class Databroker {
     return this.backend.authenticate(username, password);
   }
 
-  get(params){
-    return this.backend.get(params);
+  get(action, params, opts){
+    return this.backend.get(action, params, opts);
   }
 
-  put(params){
-    return this.backend.put(params);
+  put(params, opts){
+    return this.backend.put(params, opts);
   }
 
-  delete(id){
-    return this.backend.delete(id);
+  delete(id, opts){
+    return this.backend.delete(id, opts);
   }
 
-  query(term){
-    return this.backend.query(term);
+  query(term, opts){
+    return this.backend.query(term, opts);
   }
 
   logout(){
