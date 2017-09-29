@@ -6,7 +6,7 @@ NDEF lifecycles app to show consumer experience
   * Build tools 25.0.2
 * Open up an emulator or connect device
 
-`npm install && react-android run-android`
+`npm install && react-native run-android`
 
 #### Snaps
 
