@@ -8,6 +8,10 @@ NDEF lifecycles app to show consumer experience
 
 `npm install && react-native run-android`
 
+To run with android stacktrace
+
+`cd android && ./gradlew installDebug --stacktrace`
+
 #### Snaps
 
 <img width="501" alt="screen shot 2017-08-11 at 10 43 27 am" src="https://user-images.githubusercontent.com/762107/29218314-6b203140-7e82-11e7-9449-4eeeeb2e821a.png">
