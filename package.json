@@ -11,6 +11,7 @@
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.1",
+    "react-native-auth0": "^1.2.0",
     "react-native-nfc": "git+https://git@github.com/clickclickonsal/react-native-nfc.git#temp",
     "react-navigation": "^1.0.0-beta.11"
   },
