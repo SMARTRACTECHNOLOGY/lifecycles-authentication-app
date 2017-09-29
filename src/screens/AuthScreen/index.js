@@ -27,7 +27,6 @@ export default class AuthScreen extends React.Component {
   }
 
   getExisting = () => {
-    console.log("getting the existing app state...")
     AsyncStorage.getItem(this.props.storageKey).then((value) => {
       const { jwt } = JSON.parse(value)
       this.setState({ jwt, isAuthenticating: false })
