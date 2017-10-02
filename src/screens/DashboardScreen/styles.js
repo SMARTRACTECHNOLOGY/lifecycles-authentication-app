@@ -1,0 +1,85 @@
+import { StyleSheet } from 'react-native';
+import theme from '../../theme';
+
+const baseNavigationItem = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+  height: '100%',
+  width: '100%'
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: theme.color.lightBackground,
+    height: '100%',
+    width: '100%'
+  },
+  navigation: {
+    height: '100%',
+    width: '100%',
+    paddingTop: 60
+  },
+  navigation__container: {
+    height: '25%',
+    width: '100%'
+  },
+  scan__navigation: {
+    ...baseNavigationItem,
+    backgroundColor: '#5AAFC7'
+  },
+  registrations__navigation: {
+    ...baseNavigationItem,
+    backgroundColor: '#3993AD'
+  },
+  settings__navigation: {
+    ...baseNavigationItem,
+    backgroundColor: '#673AB7'
+  },
+  help__navigation: {
+    ...baseNavigationItem,
+    backgroundColor: '#5B0F85'
+  },
+  item__image: {
+    display: 'flex',
+    backgroundColor: theme.color.transparent,
+    height: '75%',
+    width: '30%',
+    padding: '5%'
+  },
+  image: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    opacity: 0.85
+  },
+  item__text: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingRight: 15
+  },
+  text: {
+    fontSize: 20,
+    color: theme.color.white,
+    fontWeight: '300'
+  },
+  text__help: {
+    marginTop: 5,
+    fontSize: 14,
+    color: theme.color.lightestGray,
+    fontWeight: '100'
+  },
+  linearGradient: {
+    flex: 1
+  }
+});
+
+export default styles;

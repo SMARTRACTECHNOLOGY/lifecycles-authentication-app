@@ -60,13 +60,13 @@ export default class ScanScreen extends React.Component {
   * STRICTLY FOR DEBUGGING PURPOSES
   */
   simulateTap = () => {
-    this.navigateToScanDisplay(123456789);
+    this.navigateToScanDisplay('654321');
   }
 
   componentDidMount() {
     // Remove keyboard from view just in case its up
     Keyboard.dismiss();
-    if(!this.bound){
+    if(!this.bound && !this.simulate){
       this.bindNfcListener();
     }
   }
@@ -85,7 +85,7 @@ export default class ScanScreen extends React.Component {
           />
         </View>
         <View style={ styles.help }>
-          <Text style={ styles.help__text }>TAP NFC</Text>
+          <Text style={ styles.help__text }>TAP TAG</Text>
         </View>
         {
           this.simulate &&

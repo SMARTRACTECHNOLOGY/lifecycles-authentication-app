@@ -12,6 +12,8 @@
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.1",
     "react-native-nfc": "git+https://git@github.com/clickclickonsal/react-native-nfc.git#temp",
+    "react-native-shadow": "^1.2.1",
+    "react-native-svg": "^5.3.0",
     "react-navigation": "^1.0.0-beta.11"
   },
   "devDependencies": {
