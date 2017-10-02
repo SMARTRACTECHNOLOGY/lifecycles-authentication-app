@@ -8,12 +8,12 @@ import {
   Text,
   View
 } from 'react-native';
+import credentials from './auth0-credentials';
 import { Button, Screen } from '../../components';
 import Auth0 from 'react-native-auth0';
 import theme from '../../theme';
 import styles from './styles';
 
-var credentials = require('./auth0-credentials');
 const auth0 = new Auth0(credentials);
 
 export default class AuthScreen extends React.Component {
