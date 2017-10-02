@@ -48,7 +48,7 @@ export default class AuthScreen extends React.Component {
   }
 
   onLogin = () => {
-      this.props.databroker.authByAuth0()
+      this.props.databroker.authenticate()
         .then(this.handleAuthenticationSuccess.bind(this))
         .catch(this.handleAuthenicationError.bind(this));
   };

@@ -1,6 +1,4 @@
 import { HTTP } from './backends';
-import Auth0 from 'react-native-auth0';
-import credentials from './auth0-credentials';
 
 /*
 * The databroker is a promise based data abstraction which provides an interface to
@@ -21,7 +19,6 @@ class Databroker {
 
   constructor(opts){
     this.opts = opts;
-    this.auth0 = new Auth0(credentials);
     this.backend = this.configure();
   }
 
@@ -42,12 +39,8 @@ class Databroker {
     return this.backend.status(token);
   }
 
-  authByAuth0() {
-    return this.auth0.webAuth
-            .authorize({
-              scope: 'openid profile',
-              audience: 'https://' + credentials.domain + '/userinfo'
-            })
+  authenticate(){
+    return this.backend.authenticate();
   }
 
   get(action, params, opts){
