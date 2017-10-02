@@ -8,13 +8,10 @@ import {
   Text,
   View
 } from 'react-native';
-import credentials from './auth0-credentials';
 import { Button, Screen } from '../../components';
-import Auth0 from 'react-native-auth0';
 import theme from '../../theme';
 import styles from './styles';
 
-const auth0 = new Auth0(credentials);
 
 export default class AuthScreen extends React.Component {
   constructor(props) {
@@ -38,23 +35,22 @@ export default class AuthScreen extends React.Component {
     })
   }
 
-  onLogin = () => {
-    auth0.webAuth
-      .authorize({
-        scope: 'openid profile',
-        audience: 'https://' + credentials.domain + '/userinfo'
-      })
-      .then(({ accessToken }) => {
-        this.setState({ jwt: accessToken, isAuthenticating: false });
-        AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt: accessToken }))
-          .then(() => {
-            this.props.navigation.navigate('Scan');
-          });
-      })
-      .catch(error => {
-        this.setState({ isAuthenticating: false })
-        console.log(error)
+  handleAuthenticationSuccess = ({ accessToken }) => {
+    this.setState({ jwt: accessToken, isAuthenticating: false });
+    AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt: accessToken }))
+      .then(() => {
+        this.props.navigation.navigate('Scan');
       });
+  }
+  handleAuthenicationError = error => {
+    this.setState({ isAuthenticating: false })
+    console.log(error)
+  }
+
+  onLogin = () => {
+      this.props.databroker.authByAuth0()
+        .then(this.handleAuthenticationSuccess.bind(this))
+        .catch(this.handleAuthenicationError.bind(this));
   };
   
   render() {
