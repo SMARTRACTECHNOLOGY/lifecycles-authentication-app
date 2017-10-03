@@ -79,7 +79,6 @@ export default class HTTP {
 
   setJwt = (credentials) => {
     this.jwt = credentials.accessToken;
-    console.log('jwt is...', this.jwt)
     return credentials;
   }
 
@@ -141,12 +140,14 @@ export default class HTTP {
   }
 
   authenticate = () => {
-    return this.auth0.webAuth
-            .authorize({
-              scope: 'openid profile',
-              audience: 'https://' + credentials.domain + '/userinfo'
-            })
-            .then(this.setJwt)
+    return (
+      this.auth0.webAuth
+        .authorize({
+          scope: 'openid profile',
+          audience: 'https://' + credentials.domain + '/userinfo'
+        })
+        .then(this.setJwt)
+      );
   }
 
   get = (action, params, opts) => {
