@@ -29,9 +29,9 @@ const withGlobals = (
     storageKey: '@smartrac-lifecycles-auth-app:appState',
     databroker: new Databroker({
       type: 'http',
-      base: process.env.base || 'https://beta.lifecycles.io/utilize/v1',
+      base: process.env.base || 'https://beta.lifecycles.io',
       mapping: {
-        base: '/'
+        base: '/utilize/v1'
       }
     })
   })
