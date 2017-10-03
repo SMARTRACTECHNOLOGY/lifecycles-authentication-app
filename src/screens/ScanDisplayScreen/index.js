@@ -29,27 +29,30 @@ export default class ScanDisplayScreen extends React.Component {
       error: this.errors.fetch
     });
   }
-
-  handleLoadingSuccess = (code, { data, success }) => {
-    if(!success){
+  
+  handleLoadingSuccess = (code, { data, message, code: errorCode }) => {
+    if(message || typeof data === 'undefined'){
       this.setState({
         isLoading: false,
         data: undefined,
-        error: this.errors.fetch
+        error: message
       });
     } else {
-      const hasData = typeof data[code] !== 'undefined' && data[code].length > 0
+      const hasData = Object.keys(data).length > 0;
+      const { product, metadata } = data;
       this.setState({
         isLoading: false,
-        data: hasData ? {
+        data: {
           code,
-          metadata: data[code]
-        } : undefined,
+          // Just get the last product to show
+          product: product[product.length - 1],
+          metadata
+        },
         error: undefined
       });
     }
   }
-
+  
   registerProduct = () => {
     const { data } = this.state;
     console.log(this.state)
@@ -59,7 +62,7 @@ export default class ScanDisplayScreen extends React.Component {
   loadScanData = () => {
     // Retrieve tag metadata for tag, override the base service url since its not `/rest` for some reason
     const code = this.props.navigation.state.params.data;
-    this.props.databroker.get('tag_metadata', { data: [code] }, { base: '/tag' })
+    this.props.databroker.get('byTid', { tid: code })
       .then(this.handleLoadingSuccess.bind(this, code))
       .catch(this.handleLoadingError)
   }
@@ -114,17 +117,18 @@ export default class ScanDisplayScreen extends React.Component {
               <View style={ styles.metadata }>
                 <Text style={ styles.details }>Details</Text>
                 {
-                  data.metadata.map(({ metadata }) => (
-                    Object.keys(metadata).map(key => (
+                  data.metadata ?
+                    Object.keys(data.metadata).map(metakey => (
                       <View
-                        key={ key }
+                        key={ metakey }
                         style={ styles.metadata__info }
                       >
-                        <Text style={ styles.metadata__label }>{ key }</Text>
-                        <Text style={ styles.metadata__value }>{ metadata[key] }</Text>
+                        <Text style={ styles.metadata__label }>{ metakey }</Text>
+                        <Text style={ styles.metadata__value }>{ data.metadata[metakey] }</Text>
                       </View>
                     ))
-                  ))
+                    :
+                    <Text style={ styles.nothing }>No metadata found</Text>
                 }
               </View>
             </ScrollView>

@@ -42,6 +42,7 @@ export default class ScanScreen extends React.Component {
 
   bindNfcListener() {
     NFC.addListener('NFC_CHIP', (payload) => {
+      console.log('picked up nfc read'. payload);
       switch (payload.type) {
         case NfcDataType.NDEF:
           ToastAndroid.show('NFC Tag Detected', ToastAndroid.SHORT);
@@ -60,7 +61,7 @@ export default class ScanScreen extends React.Component {
   * STRICTLY FOR DEBUGGING PURPOSES
   */
   simulateTap = () => {
-    this.navigateToScanDisplay('654321');
+    this.navigateToScanDisplay('12FA34D');
   }
 
   componentDidMount() {

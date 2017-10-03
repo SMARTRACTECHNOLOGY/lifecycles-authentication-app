@@ -41,7 +41,7 @@ export default class SplashScreen extends React.Component {
         return (
           this.props.databroker.status(jwt)
             .then(this.setLoggedIn.bind(this, username))
-        )
+        );
       }
     }
   }

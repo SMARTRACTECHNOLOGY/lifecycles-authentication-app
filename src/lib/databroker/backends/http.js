@@ -7,10 +7,7 @@ import credentials from '../auth0-credentials';
 */
 export default class HTTP {
 
-  constructor({ base, mapping, clientToken, requestTimeout = 60000 }){
-    if(!clientToken){
-      console.error('Missing `clientToken`, you will not be able to authentcate. Check constructor.');
-    }
+  constructor({ base, mapping, requestTimeout = 60000 }){
     this.auth0 = new Auth0(credentials);
     this.base = base;
     this.mapping = mapping;
@@ -21,7 +18,6 @@ export default class HTTP {
       401: 'Unauthorized',
       500: 'Internal Server Error'
     };
-    this.clientToken = btoa(clientToken);
   }
 
   checkStatus = (response) => {
@@ -82,14 +78,6 @@ export default class HTTP {
     return credentials;
   }
 
-  tokenHeaders = () => {
-    return {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      authorization: `Basic ${ this.clientToken }`
-    };
-  }
-
   authorizedHeaders = () => {
     return {
       'Content-Type': 'application/json',
@@ -98,15 +86,21 @@ export default class HTTP {
     };
   }
 
-  constructUrl = (requestType, opts = {}) => {
-    console.log(opts);
-    return `${ this.base }${ opts.base || this.mapping[requestType] || this.mapping.base }`;
+  createQueryParams = (params) => {
+    return (
+      Object.keys(params).map(key => {
+        return `${ key }=${ params[key] }`;
+      })
+      .join('&')
+    );
+  }
+
+  constructUrl = (requestType = 'get', action, params = {}, opts = {}) => {
+    return `${ this.base }/${ this.mapping.base }/${ action }?${ this.createQueryParams(params)}`;
   }
 
   urlParams = (params) => {
-    return (
-      Object.keys(params).map((key) => `&${key}=${params[key]}`).join('')
-    )
+    return Object.keys(params).map((key) => `&${key}=${params[key]}`).join('');
   }
 
   isAuthenticated = () => {
@@ -122,24 +116,16 @@ export default class HTTP {
 
   // Check token against pinging endpoint
   status = (jwt) => {
-    console.debug('=== STATUS', jwt);
     if(!jwt){
       return Promise.reject(new Error('jwt was undefined.'))
     }
-    return (
-      this.request(this.constructUrl('status'), {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          authorization: `Bearer ${ jwt.accessToken }`
-        }
-      })
-      .then(this.setJwt.bind(this, jwt))
-    );
+    // Eventually make a call to an endpoint that will validate the token as valid
+    this.setJwt({ accessToken: jwt });
+    return Promise.resolve();
   }
 
   authenticate = () => {
+    console.debug('=== AUTHENTICATE', credentials.domain);
     return (
       this.auth0.webAuth
         .authorize({
@@ -151,21 +137,23 @@ export default class HTTP {
   }
 
   get = (action, params, opts) => {
-    console.debug('=== GET', action, params, opts, `${this.constructUrl('get', opts)}/${action}`);
+    console.debug('=== GET', action, params, opts, this.constructUrl('get', action, params, opts));
     return (
-      this.request(`${this.constructUrl('get', opts)}/${action}`, {
-        method: 'POST',
-        headers: this.authorizedHeaders(),
-        body: JSON.stringify({
-          action,
-          ...params
-        })
+      this.request(this.constructUrl('get', action, params, opts), {
+        method: 'GET',
+        headers: this.authorizedHeaders()
       })
     );
   }
 
-  put = () => {
-    console.error('TODO: Implement');
+  put = (action, params, opts) => {
+    return (
+      this.request(this.constructUrl('put', action, params, opts), {
+        method: 'PUT',
+        headers: this.authorizedHeaders(),
+        body: JSON.stringify(params)
+      })
+    );
   }
 
   delete = () => {

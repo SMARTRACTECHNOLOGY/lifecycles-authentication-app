@@ -16,28 +16,10 @@ import styles from './styles';
 export default class AuthScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.getExisting()
     this.state = {
       jwt: null,
       isAuthenticating: true
     };
-  }
-
-  getExisting = () => {
-    AsyncStorage.getItem(this.props.storageKey).then((value) => {
-      try {
-        const { jwt } = JSON.parse(value)
-        this.setState({ jwt, isAuthenticating: false })
-        if (jwt) {
-          this.props.navigation.navigate('Scan');
-        } else {
-          this.onLogin()
-        }
-      } catch(err) {
-        console.log("Error reading token from storage: ", err.message)
-        this.onLogin()
-      }
-    })
   }
 
   handleAuthenticationSuccess = ({ accessToken }) => {
@@ -48,6 +30,7 @@ export default class AuthScreen extends React.Component {
         this.props.navigation.navigate('Dashboard');
       });
   }
+
   handleAuthenicationError = error => {
     this.setState({ isAuthenticating: false })
     console.log(error)
@@ -58,6 +41,10 @@ export default class AuthScreen extends React.Component {
         .then(this.handleAuthenticationSuccess.bind(this))
         .catch(this.handleAuthenicationError.bind(this));
   };
+
+  componentDidMount(){
+    this.onLogin();
+  }
 
   render() {
     const loadingDisplay = this.state.isAuthenticating ? 'flex' : 'none';
