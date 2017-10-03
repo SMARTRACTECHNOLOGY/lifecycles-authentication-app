@@ -59,7 +59,6 @@ export default class RegistrationsScreen extends React.Component {
         style={ styles.screen }
         header={ <NavHeader { ...props } /> }
       >
-        <Text style={ styles.title }>Describe Product</Text>
         <View style={ [ styles.loading, { display: loadingDisplay }] }>
           <ActivityIndicator
             animating={ isAuthenticating }
@@ -70,6 +69,7 @@ export default class RegistrationsScreen extends React.Component {
         <Registration
           error={ error }
           onSubmit={ this.register }
+          title="Describe Product"
         />
       </Screen>
     );

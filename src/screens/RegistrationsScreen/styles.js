@@ -13,14 +13,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 2
-  },
-  title: {
-    height: '100%',
-    width: '100%',
-    zIndex: 3,
-    height: 20,
-    fontSize: 36,
-    color: theme.color.primary
   }
 });
 

@@ -30,11 +30,17 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: theme.color.lightestGray,
     borderWidth: 0,
-    marginBottom: 20,
+    marginBottom: 30,
     width: '75%',
     elevation: 2,
     paddingLeft: 10,
     fontSize: 18
+  },
+  title: {
+    height: 50,
+    fontSize: 36,
+    color: theme.color.primary,
+    marginBottom: 70,
   },
   error: {
     display: 'flex',
@@ -70,7 +76,6 @@ export default class Registration extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log("handleSubmit props", this.props);
     const { onSubmit } = this.props;
     onSubmit({...this.state});
   }
@@ -78,9 +83,12 @@ export default class Registration extends React.Component {
   render () {
     console.log("render props", this.props);
     const { name, description } = this.state;
-    const { error } = this.props;
+    const { error, title } = this.props;
     return (
       <View style={ styles.register }>
+        {
+          title && <Text style={styles.title}>{ title }</Text>
+        }
         {
           error &&
             <View style={ styles.error }>
