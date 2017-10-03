@@ -30,23 +30,24 @@ export default class ScanDisplayScreen extends React.Component {
     });
   }
 
-  handleLoadingSuccess = (code, { data }) => {
-    if(!data){
+  handleLoadingSuccess = (code, { data, message, code: errorCode }) => {
+    if(message || typeof data === 'undefined'){
       this.setState({
         isLoading: false,
         data: undefined,
-        error: this.errors.fetch
+        error: message
       });
     } else {
-      const hasData = typeof data !== 'undefined' && data.length > 0;
-      const { products, metadata } = data[0];
+      const hasData = Object.keys(data).length > 0;
+      const { product, metadata } = data;
       this.setState({
         isLoading: false,
-        data: hasData ? {
+        data: {
           code,
-          products,
+          // Just get the last product to show
+          product: product[product.length - 1],
           metadata
-        } : undefined,
+        },
         error: undefined
       });
     }

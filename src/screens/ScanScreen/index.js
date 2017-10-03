@@ -8,7 +8,7 @@ export default class ScanScreen extends React.Component {
 
   constructor(props){
     super(props);
-    this.simulate = false;
+    this.simulate = true;
     this.bound = false;
   }
 
