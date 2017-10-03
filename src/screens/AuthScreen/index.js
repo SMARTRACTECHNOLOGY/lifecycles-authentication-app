@@ -25,11 +25,16 @@ export default class AuthScreen extends React.Component {
 
   getExisting = () => {
     AsyncStorage.getItem(this.props.storageKey).then((value) => {
-      const { jwt } = JSON.parse(value)
-      this.setState({ jwt, isAuthenticating: false })
-      if (jwt) {
-        this.props.navigation.navigate('Scan');
-      } else {
+      try {
+        const { jwt } = JSON.parse(value)
+        this.setState({ jwt, isAuthenticating: false })
+        if (jwt) {
+          this.props.navigation.navigate('Scan');
+        } else {
+          this.onLogin()
+        }
+      } catch(err) {
+        console.log("Error reading token from storage: ", err.message)
         this.onLogin()
       }
     })
@@ -39,7 +44,8 @@ export default class AuthScreen extends React.Component {
     this.setState({ jwt: accessToken, isAuthenticating: false });
     AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt: accessToken }))
       .then(() => {
-        this.props.navigation.navigate('Scan');
+        // Navigate to the scan screen
+        this.props.navigation.navigate('Dashboard');
       });
   }
   handleAuthenicationError = error => {
@@ -52,7 +58,7 @@ export default class AuthScreen extends React.Component {
         .then(this.handleAuthenticationSuccess.bind(this))
         .catch(this.handleAuthenicationError.bind(this));
   };
-  
+
   render() {
     const loadingDisplay = this.state.isAuthenticating ? 'flex' : 'none';
     return (
@@ -68,8 +74,8 @@ export default class AuthScreen extends React.Component {
           />
         </View>
         <View style={ styles.container }>
-        <Text style={styles.header}> You will be redirected for authentication.</Text>
-          <Text style={styles.subtext}> Please click the login button if the page doesn't load automatically</Text>
+          <Text style={styles.header}> You will be redirected for authentication.</Text>
+          <Text style={styles.subtext}>{ "Please click the login button if the page doesn't load automatically" }</Text>
           <Button
             onPress={ this.onLogin }
             style={ styles.button }
@@ -80,4 +86,3 @@ export default class AuthScreen extends React.Component {
     );
   }
 }
-

@@ -66,7 +66,7 @@ export default class SplashScreen extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { isReady, isLoggedIn, username } = this.state;
     if (isReady) {
-      const routeName = isLoggedIn ? 'Scan' : 'Auth';
+      const routeName = isLoggedIn ? 'Dashboard' : 'Auth';
       this.navigateTo(routeName, { username });
     }
   }

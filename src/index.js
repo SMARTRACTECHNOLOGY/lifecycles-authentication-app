@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import Databroker from './lib/databroker';
 import { Navigator } from './routing';
-import { AuthScreen, 
-  ScanDisplayScreen, 
-  SplashScreen, 
-  ScanScreen, 
-  ScanScreenIOS,
-  RegisterScreen } from './screens';
+import {
+  AuthScreen,
+  DashboardScreen,
+  RegistrationsScreen,
+  ScanScreen,
+  ScanDisplayScreen,
+  SplashScreen,
+  RegisterScreen,
+  ScanScreenIOS
+} from './screens';
 
 /*
 * Display scan screen based on platform
@@ -53,7 +57,9 @@ export default class LifecyclesAuthScan extends Component {
       Auth: { screen: withGlobals(AuthScreen) },
       Scan: { screen: withGlobals(ScanScreenX) },
       Display: { screen: withGlobals(ScanDisplayScreen) },
-      Register: { screen: withGlobals(RegisterScreen) }
+      Register: { screen: withGlobals(RegisterScreen) },
+      Dashboard: { screen: withGlobals(DashboardScreen) },
+      Registrations: { screen: withGlobals(RegistrationsScreen) },
     };
   }
 
