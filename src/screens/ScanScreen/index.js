@@ -1,6 +1,6 @@
 import React from 'react';
 import { AsyncStorage, Image, Keyboard, Text, ToastAndroid, Vibration, View } from 'react-native';
-import NFC, { NfcDataType, NdefRecordType } from 'react-native-nfc';
+import NFC, { NfcDataType, NdefRecordType } from '@smartractechnology/react-native-rfid-nfc';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
 
