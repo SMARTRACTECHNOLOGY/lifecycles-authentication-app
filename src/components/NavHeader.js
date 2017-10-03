@@ -35,6 +35,10 @@ export default class  NavHeader extends React.Component {
     super(props);
   }
 
+  navigateToDashboard = () => {
+    this.props.navigation.navigate('Dashboard');
+  }
+
   handleBackButton = () => {
     this.props.navigation.goBack();
   }
@@ -64,10 +68,17 @@ export default class  NavHeader extends React.Component {
               onPress={ this.handleBackButton }
             />
             :
-            <Image
-              style={ styles.logo }
-              source={ require('../assets/images/logo_only.png') }
-            />
+            this.props.navigation.state.routeName === 'Dashboard' ?
+              <Image
+                style={ styles.logo }
+                source={ require('../assets/images/logo_only.png') }
+              />
+              :
+              <Button
+                style={ styles.button }
+                title="Dashboard"
+                onPress={ this.navigateToDashboard }
+              />
         }
         <Button
           style={ styles.button }

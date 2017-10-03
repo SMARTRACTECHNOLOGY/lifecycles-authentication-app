@@ -94,7 +94,7 @@ export default class HTTP {
     return {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      authorization: `Bearer ${ this.jwt.access_token }`
+      authorization: `Bearer ${ this.jwt.accessToken }`
     };
   }
 
@@ -110,7 +110,7 @@ export default class HTTP {
   }
 
   isAuthenticated = () => {
-    return !!this.jwt.access_token;
+    return !!this.jwt.accessToken;
   }
 
   logout = () => {
@@ -132,7 +132,7 @@ export default class HTTP {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          authorization: `Bearer ${ jwt.access_token }`
+          authorization: `Bearer ${ jwt.accessToken }`
         }
       })
       .then(this.setJwt.bind(this, jwt))

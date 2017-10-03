@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '100%',
     width: '100%',
-    opacity: 0.3,
+    opacity: 0.1,
     zIndex: 1
   },
   icon: {
