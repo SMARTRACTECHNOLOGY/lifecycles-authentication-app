@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   settings__navigation: {
     ...baseNavigationItem,
-    backgroundColor: '#673AB7'
+    backgroundColor: '#7623A3'
   },
   help__navigation: {
     ...baseNavigationItem,
