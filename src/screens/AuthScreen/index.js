@@ -25,11 +25,16 @@ export default class AuthScreen extends React.Component {
 
   getExisting = () => {
     AsyncStorage.getItem(this.props.storageKey).then((value) => {
-      const { jwt } = JSON.parse(value)
-      this.setState({ jwt, isAuthenticating: false })
-      if (jwt) {
-        this.props.navigation.navigate('Scan');
-      } else {
+      try {
+        const { jwt } = JSON.parse(value)
+        this.setState({ jwt, isAuthenticating: false })
+        if (jwt) {
+          this.props.navigation.navigate('Scan');
+        } else {
+          this.onLogin()
+        }
+      } catch(err) {
+        console.log("Error reading token from storage: ", err.message)
         this.onLogin()
       }
     })
