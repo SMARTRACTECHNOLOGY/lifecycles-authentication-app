@@ -39,8 +39,8 @@ class Databroker {
     return this.backend.status(token);
   }
 
-  authenticate(username, password){
-    return this.backend.authenticate(username, password);
+  authenticate(){
+    return this.backend.authenticate();
   }
 
   get(action, params, opts){

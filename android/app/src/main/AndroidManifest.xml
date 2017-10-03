@@ -31,6 +31,16 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <!-- auth0 -->
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data
+                android:host="lifecycles.eu.auth0.com"
+                android:pathPrefix="/android/${applicationId}/callback"
+                android:scheme="${applicationId}" />
+        </intent-filter>
         <!-- react-native-nfc -->
         <intent-filter>
             <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
