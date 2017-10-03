@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: -1,
     top: 0,
-    left: 0
+    left: 0,
+    opacity: 0.90
   },
   rotated__shadow: {
     position: 'absolute',
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     transform: [{ rotateX: '180deg' }],
-    opacity: 0.85
+    opacity: 0.75
   }
 });
 
