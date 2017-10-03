@@ -7,13 +7,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "@smartractechnology/react-native-rfid-nfc": "^0.3.1",
     "platform": "^1.3.4",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
-    "react-native": "0.46.1",
+    "react-native": "0.48.3",
     "react-native-auth0": "^1.2.0",
-    "react-native-nfc": "git+https://git@github.com/clickclickonsal/react-native-nfc.git#temp",
-    "react-navigation": "^1.0.0-beta.11"
+    "react-native-nfc-reader": "git+ssh://git@github.com/SMARTRACTECHNOLOGY/react-native-nfc-reader.git#fix-android",
+    "react-navigation": "^1.0.0-beta.13"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

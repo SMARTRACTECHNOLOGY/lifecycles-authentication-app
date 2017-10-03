@@ -1,11 +1,11 @@
 import React from 'react';
-import { AsyncStorage, Image, Keyboard, Text, ToastAndroid, Vibration, View } from 'react-native';
-import NFC, { NfcDataType, NdefRecordType } from '@smartractechnology/react-native-rfid-nfc';
+import { AlertIOS, AsyncStorage, DeviceEventEmitter, Image, Platform, Text, View } from 'react-native';
+import { NFCReader } from 'react-native-nfc-reader';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
 
-export default class ScanScreen extends React.Component {
-
+export default class ScanScreenIOS extends React.Component {
+  
   constructor(props){
     super(props);
     this.simulate = false;
@@ -14,45 +14,41 @@ export default class ScanScreen extends React.Component {
 
   navigateToScanDisplay = (data) => {
     this.props.navigation.navigate('Display', { data });
-    NFC.removeListener('NFC_CHIP');
+    NFCReader.removeNFCListeners()
     this.bound = false;
   }
 
-  /*
+ /*
   * Handles a single NDEF read and an individual record on a tag of type text ref tag metadata
   */
-  handleNdef(payload) {
+  handleNdef(data) {
     try {
-      const { data, id } = payload;
-      if(data && data.length){
-        const { type, data: code, encoding, locale } = data[0][0];
-        if (type === NdefRecordType.TEXT) {
-          // Add in navigation transition buffer
-          setTimeout(() => this.navigateToScanDisplay(code), 300);
+      const nfcData = data.filter(({ format, type, identifier, payload }) => (payload && payload !== null))
+      if (nfcData.length > 0) {
+        const { format, type, identifier, payload } = nfcData[0]
+        if (type === 'TEXT' || 'T') {
+          setTimeout(() => this.navigateToScanDisplay(payload), 300);
         } else {
           throw new Error(`Error: Tag (${type}, ${encoding}, ${locale}), is unsupported.`);
         }
       } else {
         throw new Error('Error: Tag record does not exist.');
       }
-    } catch (error){
-      ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    } catch(error) {
+      AlertIOS.alert(
+        "NFC Tag Error",
+        error.message,
+        [
+          {text: 'OK', onPress: () => NFCReader.initialize()}
+        ]
+      );
     }
+    
   }
 
   bindNfcListener() {
-    NFC.addListener('NFC_CHIP', (payload) => {
-      console.log('picked up nfc read'. payload);
-      switch (payload.type) {
-        case NfcDataType.NDEF:
-          ToastAndroid.show('NFC Tag Detected', ToastAndroid.SHORT);
-          Vibration.vibrate();
-          this.handleNdef(payload);
-          break;
-        case NfcDataType.TAG:
-          ToastAndroid.show('Invalid Tag Type Detected. Try Again.', ToastAndroid.SHORT);
-          break;
-      }
+    NFCReader.on((payload) => {
+      this.handleNdef(payload);
     });
     this.bound = true;
   }
@@ -61,13 +57,12 @@ export default class ScanScreen extends React.Component {
   * STRICTLY FOR DEBUGGING PURPOSES
   */
   simulateTap = () => {
-    this.navigateToScanDisplay('12FA34D');
+    this.navigateToScanDisplay(123456789);
   }
 
   componentDidMount() {
-    // Remove keyboard from view just in case its up
-    Keyboard.dismiss();
-    if(!this.bound && !this.simulate){
+    if(!this.bound){
+      NFCReader.initialize();
       this.bindNfcListener();
     }
   }
@@ -86,7 +81,7 @@ export default class ScanScreen extends React.Component {
           />
         </View>
         <View style={ styles.help }>
-          <Text style={ styles.help__text }>TAP TAG</Text>
+          <Text style={ styles.help__text }>TAP NFC</Text>
         </View>
         {
           this.simulate &&

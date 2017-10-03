@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 const colors = {
   black: '#000000',
   white: '#ffffff',
@@ -16,7 +18,7 @@ const colors = {
 
 const theme = {
   typography: {
-    font: 'Open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif',
+    font: (Platform.OS === 'ios') ? 'Helvetica' : 'Roboto',
     size: 16
   },
   color: {
@@ -29,7 +31,7 @@ const theme = {
     ...colors
   },
   loading: {
-    size: 80
+    size: (Platform.OS === 'ios') ? 1 : 80
   }
 };
 

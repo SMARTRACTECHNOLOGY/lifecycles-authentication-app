@@ -2,6 +2,5 @@ rootProject.name = 'LifecyclesAuthScan'
 include ':react-native-auth0'
 project(':react-native-auth0').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-auth0/android')
 include ':react-native-nfc'
-project(':react-native-nfc').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-nfc/android')
-
+project(':react-native-nfc').projectDir = new File(rootProject.projectDir, '../node_modules/@smartractechnology/react-native-rfid-nfc/android')
 include ':app'

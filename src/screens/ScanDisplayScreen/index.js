@@ -29,7 +29,7 @@ export default class ScanDisplayScreen extends React.Component {
       error: this.errors.fetch
     });
   }
-
+  
   handleLoadingSuccess = (code, { data, message, code: errorCode }) => {
     if(message || typeof data === 'undefined'){
       this.setState({
@@ -51,6 +51,12 @@ export default class ScanDisplayScreen extends React.Component {
         error: undefined
       });
     }
+  }
+  
+  registerProduct = () => {
+    const { data } = this.state;
+    console.log(this.state)
+    this.props.navigation.navigate('Registrations', { data });
   }
 
   loadScanData = () => {
@@ -138,11 +144,20 @@ export default class ScanDisplayScreen extends React.Component {
               </Text>
             </View>
         }
-        <Button
-          style={ styles.button }
-          title={ isLoading ? 'Cancel' : 'Scan Another' }
-          onPress={ this.navigateToScan }
-        />
+        <View style={ styles.buttonView }>
+           {
+            hasData && <Button
+              style={ styles.button }
+              title='Register Product'
+              onPress={ this.registerProduct }
+            />
+           }
+          <Button
+            style={ styles.button }
+            title={ isLoading ? 'Cancel' : 'Scan Another' }
+            onPress={ this.navigateToScan }
+          />
+        </View>
       </Screen>
     );
   }
