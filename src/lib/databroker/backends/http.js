@@ -1,4 +1,6 @@
 import { btoa } from './utils';
+import Auth0 from 'react-native-auth0';
+import credentials from '../auth0-credentials';
 
 /*
 * HTTP Client that works w/ `fetch` and jwts
@@ -9,6 +11,7 @@ export default class HTTP {
     if(!clientToken){
       console.error('Missing `clientToken`, you will not be able to authentcate. Check constructor.');
     }
+    this.auth0 = new Auth0(credentials);
     this.base = base;
     this.mapping = mapping;
     this.requestTimeout = requestTimeout;
@@ -74,9 +77,9 @@ export default class HTTP {
     );
   }
 
-  setJwt = (jwt) => {
-    this.jwt = jwt;
-    return jwt;
+  setJwt = (credentials) => {
+    this.jwt = credentials.accessToken;
+    return credentials;
   }
 
   tokenHeaders = () => {
@@ -136,19 +139,15 @@ export default class HTTP {
     );
   }
 
-  authenticate = (username, password) => {
-    console.debug('=== AUTHENTICATE', username);
-    const params = {
-      username: encodeURIComponent(username),
-      password: encodeURIComponent(password)
-    };
+  authenticate = () => {
     return (
-      this.request(`${ this.constructUrl('authenticate') }${ this.urlParams(params) }`, {
-        method: 'POST',
-        headers: this.tokenHeaders()
-      })
-      .then(this.setJwt)
-    );
+      this.auth0.webAuth
+        .authorize({
+          scope: 'openid profile',
+          audience: 'https://' + credentials.domain + '/userinfo'
+        })
+        .then(this.setJwt)
+      );
   }
 
   get = (action, params, opts) => {

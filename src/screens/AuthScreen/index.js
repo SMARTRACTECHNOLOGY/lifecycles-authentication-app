@@ -1,62 +1,60 @@
-import React from 'react';
-import { ActivityIndicator, AsyncStorage, TextInput, View } from 'react-native';
-import { Button, Login, Screen } from '../../components';
+import React, { Component } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  AppRegistry,
+  AsyncStorage,
+  Platform,
+  Text,
+  View
+} from 'react-native';
+import { Button, Screen } from '../../components';
 import theme from '../../theme';
 import styles from './styles';
 
+
 export default class AuthScreen extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.getExisting()
     this.state = {
-      error: undefined,
-      username: '',
-      isAuthenticating: false
-    }
+      jwt: null,
+      isAuthenticating: true
+    };
   }
 
-  handleAuthenicationError = (err) => {
-    this.setState({
-      error: 'Invalid username or password',
-      isAuthenticating: false
-    });
+  getExisting = () => {
+    AsyncStorage.getItem(this.props.storageKey).then((value) => {
+      const { jwt } = JSON.parse(value)
+      this.setState({ jwt, isAuthenticating: false })
+      if (jwt) {
+        this.props.navigation.navigate('Scan');
+      } else {
+        this.onLogin()
+      }
+    })
   }
 
-  handleAuthenicationSuccess = (username, jwt) => {
-    this.setState({
-      error: undefined,
-      isAuthenticating: false
-    });
-    // Store session information and proceed to `Scan` screen
-    const appState = JSON.stringify({ username, jwt });
-    AsyncStorage.setItem(this.props.storageKey, appState)
+  handleAuthenticationSuccess = ({ accessToken }) => {
+    this.setState({ jwt: accessToken, isAuthenticating: false });
+    AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt: accessToken }))
       .then(() => {
-        // Navigate to the scan screen
         this.props.navigation.navigate('Scan');
       });
   }
-
-  signIn = (username, password) => {
-    this.setState({
-      isAuthenticating: true,
-      username
-    });
-    this.props.databroker
-      .authenticate(username, password)
-      .then(this.handleAuthenicationSuccess.bind(this, username))
-      .catch(this.handleAuthenicationError)
+  handleAuthenicationError = error => {
+    this.setState({ isAuthenticating: false })
+    console.log(error)
   }
 
-  componentDidMount(){
-    if(this.props.navigation.state.params){
-      console.log('current username!', this.props.navigation.state.params.username);
-      this.setState({ username: this.props.navigation.state.params.username})
-    }
-  }
-
-  render(){
-    const { error, username, isAuthenticating } = this.state;
-    const loadingDisplay = isAuthenticating ? 'flex' : 'none';
+  onLogin = () => {
+      this.props.databroker.authenticate()
+        .then(this.handleAuthenticationSuccess.bind(this))
+        .catch(this.handleAuthenicationError.bind(this));
+  };
+  
+  render() {
+    const loadingDisplay = this.state.isAuthenticating ? 'flex' : 'none';
     return (
       <Screen
         id="auth-screen"
@@ -64,19 +62,22 @@ export default class AuthScreen extends React.Component {
       >
         <View style={ [ styles.loading, { display: loadingDisplay }] }>
           <ActivityIndicator
-            animating={ isAuthenticating }
+            animating={ this.state.isAuthenticating }
             color={ theme.color.lightBackground }
             size={ theme.loading.size }
           />
         </View>
-        <View style={ styles.login }>
-          <Login
-            error={ error }
-            username={ username }
-            onSubmit={ this.signIn }
+        <View style={ styles.container }>
+        <Text style={styles.header}> You will be redirected for authentication.</Text>
+          <Text style={styles.subtext}> Please click the login button if the page doesn't load automatically</Text>
+          <Button
+            onPress={ this.onLogin }
+            style={ styles.button }
+            title="Log In"
           />
         </View>
       </Screen>
     );
   }
 }
+
