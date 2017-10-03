@@ -1,3 +1,9 @@
+import { Platform } from 'react-native';
+
+const fontFamily = (Platform.OS === 'ios')
+? 'Helvetica'
+: 'Open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif'
+
 const colors = {
   black: '#000000',
   white: '#ffffff',
@@ -16,6 +22,7 @@ const colors = {
 
 const theme = {
   typography: {
+    font: fontFamily,
     size: 16
   },
   color: {
@@ -28,7 +35,7 @@ const theme = {
     ...colors
   },
   loading: {
-    size: 1
+    size: (Platform.OS === 'ios') ? 1 : 80
   }
 };
 
