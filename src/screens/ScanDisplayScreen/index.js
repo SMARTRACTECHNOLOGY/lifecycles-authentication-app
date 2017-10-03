@@ -23,7 +23,6 @@ export default class ScanDisplayScreen extends React.Component {
   }
 
   handleLoadingError = (error) => {
-    console.log('handling loading error', error);
     this.setState({
       isLoading: false,
       data: undefined,

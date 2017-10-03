@@ -51,8 +51,8 @@ class Databroker {
     return this.backend.get(action, params, opts);
   }
 
-  put(params, opts){
-    return this.backend.put(params, opts);
+  put(action, params, opts){
+    return this.backend.put(action, params, opts);
   }
 
   delete(id, opts){

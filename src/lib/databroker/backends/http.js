@@ -79,7 +79,6 @@ export default class HTTP {
   }
 
   authorizedHeaders = () => {
-    console.log('authorizedHeaders', this.jwt);
     return {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -147,8 +146,14 @@ export default class HTTP {
     );
   }
 
-  put = () => {
-    console.error('TODO: Implement');
+  put = (action, params, opts) => {
+    return (
+      this.request(this.constructUrl('put', action, params, opts), {
+        method: 'PUT',
+        headers: this.authorizedHeaders(),
+        body: JSON.stringify(params)
+      })
+    );
   }
 
   delete = () => {
