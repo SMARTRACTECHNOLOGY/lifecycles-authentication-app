@@ -14,11 +14,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 2
   },
-  register: {
-    height: '100%',
-    width: '100%',
-    zIndex: 2
-  },
   title: {
     height: '100%',
     width: '100%',
