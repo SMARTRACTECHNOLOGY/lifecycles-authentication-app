@@ -36,10 +36,13 @@
 		2DCD954D1E0B4F2C00145EB5 /* LifecyclesAuthScanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LifecyclesAuthScanTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		D06458541F7D21CE00955C1A /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06458501F7D21CD00955C1A /* NFCReader.swift */; };
-		D06458551F7D21CE00955C1A /* NFCReaderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = D06458511F7D21CD00955C1A /* NFCReaderBridge.m */; };
-		D06458561F7D21CE00955C1A /* NFCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06458521F7D21CD00955C1A /* NFCHelper.swift */; };
 		86714680FFEA471A93C0D232 /* libA0Auth0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C3222401CA842D787D263BA /* libA0Auth0.a */; };
+		D06458541F7D21CE00955C1A /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D06458551F7D21CE00955C1A /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D06458561F7D21CE00955C1A /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D0B5C4FE1F83F4BA0082A2D8 /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C4FA1F83F4BA0082A2D8 /* NFCReader.swift */; };
+		D0B5C4FF1F83F4BA0082A2D8 /* NFCReaderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C4FB1F83F4BA0082A2D8 /* NFCReaderBridge.m */; };
+		D0B5C5001F83F4BA0082A2D8 /* NFCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C4FC1F83F4BA0082A2D8 /* NFCHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +263,13 @@
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
 		};
+		D0B5C4DA1F83F4390082A2D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCD17DFD2D7A423F982F2209 /* A0Auth0.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = A0Auth0;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -289,6 +299,11 @@
 		7C3222401CA842D787D263BA /* libA0Auth0.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libA0Auth0.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CCD17DFD2D7A423F982F2209 /* A0Auth0.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = A0Auth0.xcodeproj; path = "../node_modules/react-native-auth0/ios/A0Auth0.xcodeproj"; sourceTree = "<group>"; };
+		D0B5C4F91F83F4950082A2D8 /* LifecyclesAuthScan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LifecyclesAuthScan.entitlements; path = LifecyclesAuthScan/LifecyclesAuthScan.entitlements; sourceTree = "<group>"; };
+		D0B5C4FA1F83F4BA0082A2D8 /* NFCReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCReader.swift; path = "../node_modules/react-native-nfc-reader/NFCReader.swift"; sourceTree = "<group>"; };
+		D0B5C4FB1F83F4BA0082A2D8 /* NFCReaderBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NFCReaderBridge.m; path = "../node_modules/react-native-nfc-reader/NFCReaderBridge.m"; sourceTree = "<group>"; };
+		D0B5C4FC1F83F4BA0082A2D8 /* NFCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCHelper.swift; path = "../node_modules/react-native-nfc-reader/NFCHelper.swift"; sourceTree = "<group>"; };
+		D0B5C4FD1F83F4BA0082A2D8 /* NFCReader-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NFCReader-Bridging-Header.h"; path = "../node_modules/react-native-nfc-reader/NFCReader-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,11 +439,11 @@
 		13B07FAE1A68108700A75B9A /* LifecyclesAuthScan */ = {
 			isa = PBXGroup;
 			children = (
-				D06458571F7D222B00955C1A /* LifecyclesAuthScan.entitlements */,
-				D06458521F7D21CD00955C1A /* NFCHelper.swift */,
-				D06458531F7D21CE00955C1A /* NFCReader-Bridging-Header.h */,
-				D06458501F7D21CD00955C1A /* NFCReader.swift */,
-				D06458511F7D21CD00955C1A /* NFCReaderBridge.m */,
+				D0B5C4FC1F83F4BA0082A2D8 /* NFCHelper.swift */,
+				D0B5C4FD1F83F4BA0082A2D8 /* NFCReader-Bridging-Header.h */,
+				D0B5C4FA1F83F4BA0082A2D8 /* NFCReader.swift */,
+				D0B5C4FB1F83F4BA0082A2D8 /* NFCReaderBridge.m */,
+				D0B5C4F91F83F4950082A2D8 /* LifecyclesAuthScan.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -535,6 +550,14 @@
 				7C3222401CA842D787D263BA /* libA0Auth0.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		D0B5C4D71F83F4390082A2D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D0B5C4DB1F83F4390082A2D8 /* libA0Auth0.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -658,6 +681,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = D0B5C4D71F83F4390082A2D8 /* Products */;
+					ProjectRef = CCD17DFD2D7A423F982F2209 /* A0Auth0.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -917,6 +944,13 @@
 			remoteRef = D0B5C4BF1F83F2B50082A2D8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D0B5C4DB1F83F4390082A2D8 /* libA0Auth0.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libA0Auth0.a;
+			remoteRef = D0B5C4DA1F83F4390082A2D8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -997,11 +1031,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D06458561F7D21CE00955C1A /* NFCHelper.swift in Sources */,
+				D06458561F7D21CE00955C1A /* (null) in Sources */,
+				D0B5C5001F83F4BA0082A2D8 /* NFCHelper.swift in Sources */,
+				D0B5C4FF1F83F4BA0082A2D8 /* NFCReaderBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				D0B5C4FE1F83F4BA0082A2D8 /* NFCReader.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				D06458541F7D21CE00955C1A /* NFCReader.swift in Sources */,
-				D06458551F7D21CE00955C1A /* NFCReaderBridge.m in Sources */,
+				D06458541F7D21CE00955C1A /* (null) in Sources */,
+				D06458551F7D21CE00955C1A /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
