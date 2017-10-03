@@ -26,7 +26,7 @@ export default class ScanScreenIOS extends React.Component {
       const nfcData = data.filter(({ format, type, identifier, payload }) => (payload && payload !== null))
       if (nfcData.length > 0) {
         const { format, type, identifier, payload } = nfcData[0]
-        if (type === 'TEXT') {
+        if (type === 'TEXT' || 'T') {
           setTimeout(() => this.navigateToScanDisplay(payload), 300);
         } else {
           throw new Error(`Error: Tag (${type}, ${encoding}, ${locale}), is unsupported.`);
