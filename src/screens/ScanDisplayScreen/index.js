@@ -52,7 +52,7 @@ export default class ScanDisplayScreen extends React.Component {
 
   registerProduct = () => {
     const { data } = this.state;
-    this.props.navigation.navigate('Register', { data });
+    this.props.navigation.navigate('Registrations', { data });
   }
 
   loadScanData = () => {
@@ -140,15 +140,14 @@ export default class ScanDisplayScreen extends React.Component {
             </View>
         }
         <View style={ styles.buttonView }>
-          {
-            hasData ?
+          
+           
             <Button
               style={ styles.button }
               title='Register Product'
               onPress={ this.registerProduct }
             />
-            : null
-          }
+          
           <Button
             style={ styles.button }
             title={ isLoading ? 'Cancel' : 'Scan Another' }

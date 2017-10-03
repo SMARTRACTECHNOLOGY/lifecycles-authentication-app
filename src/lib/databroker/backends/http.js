@@ -94,7 +94,7 @@ export default class HTTP {
     return {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      authorization: `Bearer ${ this.jwt.accessToken }`
+      //authorization: `Bearer ${ this.jwt.accessToken }`
     };
   }
 

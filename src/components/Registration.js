@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Register extends React.Component {
+export default class Registration extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
