@@ -58,7 +58,7 @@ export default class SplashScreen extends React.Component {
       .then(this.checkJwt)
       .catch(this.setReady);
   }
-
+  
   componentDidMount(){
     this.loadApp();
   }

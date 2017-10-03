@@ -24,10 +24,9 @@ const styles = StyleSheet.create({
     marginTop: headerHeight
   },
   missing: {
-    display: 'flex',
-    height: '100%',
+    height: '85%',
     width: '100%',
-    zIndex: 2,
+    zIndex: 0,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
@@ -39,14 +38,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 100,
+    zIndex: 0,
     fontSize: 24,
     color: theme.color.error,
     textAlign: 'center'
   },
+  buttonView:{
+    flexDirection: 'row',
+    zIndex: 4,
+    bottom: 20
+  },
   button: {
-    position: 'absolute',
-    bottom: 20,
-    zIndex: 3
+    marginRight: 10,
+    marginLeft: 10
   },
   sku: {
     color: theme.color.gray,

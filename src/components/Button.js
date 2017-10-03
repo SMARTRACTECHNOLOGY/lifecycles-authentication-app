@@ -7,7 +7,8 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   button: Platform.select({
     ios: {
-      overflow: 'hidden'
+      elevation: 2,
+      backgroundColor: theme.color.primary
     },
     android: {
       elevation: 2,

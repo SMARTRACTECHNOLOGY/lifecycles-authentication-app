@@ -16,7 +16,6 @@ const colors = {
 
 const theme = {
   typography: {
-    font: 'Open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif',
     size: 16
   },
   color: {
@@ -29,7 +28,7 @@ const theme = {
     ...colors
   },
   loading: {
-    size: 80
+    size: 1
   }
 };
 
