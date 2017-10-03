@@ -39,6 +39,7 @@
 		D06458541F7D21CE00955C1A /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06458501F7D21CD00955C1A /* NFCReader.swift */; };
 		D06458551F7D21CE00955C1A /* NFCReaderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = D06458511F7D21CD00955C1A /* NFCReaderBridge.m */; };
 		D06458561F7D21CE00955C1A /* NFCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06458521F7D21CD00955C1A /* NFCHelper.swift */; };
+		86714680FFEA471A93C0D232 /* libA0Auth0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C3222401CA842D787D263BA /* libA0Auth0.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,28 +232,28 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		D03D0C391F7C35BE0087D7E2 /* PBXContainerItemProxy */ = {
+		D0B5C4B91F83F2B50082A2D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
 			remoteInfo = "third-party";
 		};
-		D03D0C3B1F7C35BE0087D7E2 /* PBXContainerItemProxy */ = {
+		D0B5C4BB1F83F2B50082A2D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
 			remoteInfo = "third-party-tvOS";
 		};
-		D03D0C3D1F7C35BE0087D7E2 /* PBXContainerItemProxy */ = {
+		D0B5C4BD1F83F2B50082A2D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
 			remoteInfo = "double-conversion";
 		};
-		D03D0C3F1F7C35BE0087D7E2 /* PBXContainerItemProxy */ = {
+		D0B5C4BF1F83F2B50082A2D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
@@ -285,12 +286,9 @@
 		2D02E4901E0B4A5D006451C7 /* LifecyclesAuthScan-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LifecyclesAuthScan-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7C3222401CA842D787D263BA /* libA0Auth0.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libA0Auth0.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		D06458501F7D21CD00955C1A /* NFCReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCReader.swift; path = "../node_modules/react-native-nfc-reader/NFCReader.swift"; sourceTree = "<group>"; };
-		D06458511F7D21CD00955C1A /* NFCReaderBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NFCReaderBridge.m; path = "../node_modules/react-native-nfc-reader/NFCReaderBridge.m"; sourceTree = "<group>"; };
-		D06458521F7D21CD00955C1A /* NFCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCHelper.swift; path = "../node_modules/react-native-nfc-reader/NFCHelper.swift"; sourceTree = "<group>"; };
-		D06458531F7D21CE00955C1A /* NFCReader-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NFCReader-Bridging-Header.h"; path = "../node_modules/react-native-nfc-reader/NFCReader-Bridging-Header.h"; sourceTree = "<group>"; };
-		D06458571F7D222B00955C1A /* LifecyclesAuthScan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LifecyclesAuthScan.entitlements; path = LifecyclesAuthScan/LifecyclesAuthScan.entitlements; sourceTree = "<group>"; };
+		CCD17DFD2D7A423F982F2209 /* A0Auth0.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = A0Auth0.xcodeproj; path = "../node_modules/react-native-auth0/ios/A0Auth0.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +315,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				86714680FFEA471A93C0D232 /* libA0Auth0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,10 +451,10 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				D03D0C3A1F7C35BE0087D7E2 /* libthird-party.a */,
-				D03D0C3C1F7C35BE0087D7E2 /* libthird-party.a */,
-				D03D0C3E1F7C35BE0087D7E2 /* libdouble-conversion.a */,
-				D03D0C401F7C35BE0087D7E2 /* libdouble-conversion.a */,
+				D0B5C4BA1F83F2B50082A2D8 /* libthird-party.a */,
+				D0B5C4BC1F83F2B50082A2D8 /* libthird-party.a */,
+				D0B5C4BE1F83F2B50082A2D8 /* libdouble-conversion.a */,
+				D0B5C4C01F83F2B50082A2D8 /* libdouble-conversion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -492,6 +491,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				CCD17DFD2D7A423F982F2209 /* A0Auth0.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -512,6 +512,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LifecyclesAuthScanTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				D0B5C49B1F83F2B40082A2D8 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -526,6 +527,14 @@
 				2D02E4901E0B4A5D006451C7 /* LifecyclesAuthScan-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D0B5C49B1F83F2B40082A2D8 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				7C3222401CA842D787D263BA /* libA0Auth0.a */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -609,7 +618,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -880,32 +889,32 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D03D0C3A1F7C35BE0087D7E2 /* libthird-party.a */ = {
+		D0B5C4BA1F83F2B50082A2D8 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = D03D0C391F7C35BE0087D7E2 /* PBXContainerItemProxy */;
+			remoteRef = D0B5C4B91F83F2B50082A2D8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D03D0C3C1F7C35BE0087D7E2 /* libthird-party.a */ = {
+		D0B5C4BC1F83F2B50082A2D8 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = D03D0C3B1F7C35BE0087D7E2 /* PBXContainerItemProxy */;
+			remoteRef = D0B5C4BB1F83F2B50082A2D8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D03D0C3E1F7C35BE0087D7E2 /* libdouble-conversion.a */ = {
+		D0B5C4BE1F83F2B50082A2D8 /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = D03D0C3D1F7C35BE0087D7E2 /* PBXContainerItemProxy */;
+			remoteRef = D0B5C4BD1F83F2B50082A2D8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D03D0C401F7C35BE0087D7E2 /* libdouble-conversion.a */ = {
+		D0B5C4C01F83F2B50082A2D8 /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = D03D0C3F1F7C35BE0087D7E2 /* PBXContainerItemProxy */;
+			remoteRef = D0B5C4BF1F83F2B50082A2D8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1051,9 +1060,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
+				);
 				INFOPLIST_FILE = LifecyclesAuthScanTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1069,10 +1086,17 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = KNDXTF2ML2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
+				);
 				INFOPLIST_FILE = LifecyclesAuthScanTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1090,7 +1114,10 @@
 				CODE_SIGN_ENTITLEMENTS = LifecyclesAuthScan/LifecyclesAuthScan.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = KNDXTF2ML2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
+				);
 				INFOPLIST_FILE = LifecyclesAuthScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1115,7 +1142,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LifecyclesAuthScan/LifecyclesAuthScan.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KNDXTF2ML2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
+				);
 				INFOPLIST_FILE = LifecyclesAuthScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1144,8 +1174,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
+				);
 				INFOPLIST_FILE = "LifecyclesAuthScan-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1170,8 +1208,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
+				);
 				INFOPLIST_FILE = "LifecyclesAuthScan-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1197,6 +1243,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "LifecyclesAuthScan-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.LifecyclesAuthScan-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -1218,6 +1268,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "LifecyclesAuthScan-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.LifecyclesAuthScan-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
