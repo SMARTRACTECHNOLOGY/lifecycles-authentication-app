@@ -29,13 +29,10 @@ const withGlobals = (
     storageKey: '@smartrac-lifecycles-auth-app:appState',
     databroker: new Databroker({
       type: 'http',
-      base: process.env.base || 'https://beta.lifecycles.io',
+      base: process.env.base || 'https://beta.lifecycles.io/utilize/v1',
       mapping: {
-        base: '/rest',
-        status: '/users/me',
-        authenticate: '/oauth/token?grant_type=password&scope=read'
-      },
-      clientToken: process.env.client || 'smartcosmosservice:9HhnNDhfGEXfNEn6'
+        base: '/'
+      }
     })
   })
 );

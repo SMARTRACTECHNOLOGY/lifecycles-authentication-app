@@ -39,6 +39,10 @@ class Databroker {
     return this.backend.status(token);
   }
 
+  isAuthenticated(){
+    return this.backend.isAuthenticated();
+  }
+
   authenticate(){
     return this.backend.authenticate();
   }

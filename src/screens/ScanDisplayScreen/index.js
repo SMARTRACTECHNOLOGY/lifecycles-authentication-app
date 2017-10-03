@@ -23,6 +23,7 @@ export default class ScanDisplayScreen extends React.Component {
   }
 
   handleLoadingError = (error) => {
+    console.log('handling loading error', error);
     this.setState({
       isLoading: false,
       data: undefined,
@@ -30,30 +31,32 @@ export default class ScanDisplayScreen extends React.Component {
     });
   }
 
-    handleLoadingSuccess = (code, { data, success }) => {
-      if(!success){
-        this.setState({
-          isLoading: false,
-          data: undefined,
-          error: this.errors.fetch
-        });
-      } else {
-        const hasData = typeof data[code] !== 'undefined' && data[code].length > 0
-        this.setState({
-          isLoading: false,
-          data: hasData ? {
-            code,
-            metadata: data[code]
-          } : undefined,
-          error: undefined
-        });
-      }
+  handleLoadingSuccess = (code, { data }) => {
+    if(!data){
+      this.setState({
+        isLoading: false,
+        data: undefined,
+        error: this.errors.fetch
+      });
+    } else {
+      const hasData = typeof data !== 'undefined' && data.length > 0;
+      const { products, metadata } = data[0];
+      this.setState({
+        isLoading: false,
+        data: hasData ? {
+          code,
+          products,
+          metadata
+        } : undefined,
+        error: undefined
+      });
+    }
   }
 
   loadScanData = () => {
     // Retrieve tag metadata for tag, override the base service url since its not `/rest` for some reason
     const code = this.props.navigation.state.params.data;
-    this.props.databroker.get('tag_metadata', { data: [code] }, { base: '/tag' })
+    this.props.databroker.get('byTid', { tid: code })
       .then(this.handleLoadingSuccess.bind(this, code))
       .catch(this.handleLoadingError)
   }
@@ -108,17 +111,18 @@ export default class ScanDisplayScreen extends React.Component {
               <View style={ styles.metadata }>
                 <Text style={ styles.details }>Details</Text>
                 {
-                  data.metadata.map(({ metadata }) => (
-                    Object.keys(metadata).map(key => (
+                  data.metadata ?
+                    Object.keys(data.metadata).map(metakey => (
                       <View
-                        key={ key }
+                        key={ metakey }
                         style={ styles.metadata__info }
                       >
-                        <Text style={ styles.metadata__label }>{ key }</Text>
-                        <Text style={ styles.metadata__value }>{ metadata[key] }</Text>
+                        <Text style={ styles.metadata__label }>{ metakey }</Text>
+                        <Text style={ styles.metadata__value }>{ data.metadata[metakey] }</Text>
                       </View>
                     ))
-                  ))
+                    :
+                    <Text style={ styles.nothing }>No metadata found</Text>
                 }
               </View>
             </ScrollView>

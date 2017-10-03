@@ -8,7 +8,7 @@ export default class ScanScreen extends React.Component {
 
   constructor(props){
     super(props);
-    this.simulate = false;
+    this.simulate = true;
     this.bound = false;
   }
 
@@ -60,7 +60,7 @@ export default class ScanScreen extends React.Component {
   * STRICTLY FOR DEBUGGING PURPOSES
   */
   simulateTap = () => {
-    this.navigateToScanDisplay('654321');
+    this.navigateToScanDisplay('12FA34D');
   }
 
   componentDidMount() {
