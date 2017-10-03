@@ -81,7 +81,6 @@ export default class Registration extends React.Component {
   }
 
   render () {
-    console.log("render props", this.props);
     const { name, description } = this.state;
     const { error, title } = this.props;
     return (
@@ -114,7 +113,7 @@ export default class Registration extends React.Component {
           value={ description }
           multiline={ true }
           editable={ true }
-          maxLength={ 50 }
+          maxLength={ 280 }
         />
         <Button 
           style={ styles.button }
