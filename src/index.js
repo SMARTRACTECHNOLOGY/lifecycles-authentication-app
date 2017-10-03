@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
+import { Platform } from 'react-native';
 import Databroker from './lib/databroker';
 import { Navigator } from './routing';
-import { AuthScreen, ScanScreen, ScanDisplayScreen, SplashScreen } from './screens';
+import { AuthScreen, 
+  ScanDisplayScreen, 
+  SplashScreen, 
+  ScanScreen, 
+  ScanScreenIOS,
+  RegisterScreen } from './screens';
+
+/*
+* Display scan screen based on platform
+*/
+const ScanScreenX = (Platform.OS === 'ios') ? ScanScreenIOS : ScanScreen
 
 /*
 * Higher-order component that passes in a context mapping
@@ -40,8 +51,9 @@ export default class LifecyclesAuthScan extends Component {
     this.routeConfig = {
       Splash: { screen: withGlobals(SplashScreen) },
       Auth: { screen: withGlobals(AuthScreen) },
-      Scan: { screen: withGlobals(ScanScreen) },
-      Display: { screen: withGlobals(ScanDisplayScreen) }
+      Scan: { screen: withGlobals(ScanScreenX) },
+      Display: { screen: withGlobals(ScanDisplayScreen) },
+      Register: { screen: withGlobals(RegisterScreen) }
     };
   }
 

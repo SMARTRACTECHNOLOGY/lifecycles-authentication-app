@@ -30,24 +30,29 @@ export default class ScanDisplayScreen extends React.Component {
     });
   }
 
-    handleLoadingSuccess = (code, { data, success }) => {
-      if(!success){
-        this.setState({
-          isLoading: false,
-          data: undefined,
-          error: this.errors.fetch
-        });
-      } else {
-        const hasData = typeof data[code] !== 'undefined' && data[code].length > 0
-        this.setState({
-          isLoading: false,
-          data: hasData ? {
-            code,
-            metadata: data[code]
-          } : undefined,
-          error: undefined
-        });
-      }
+  handleLoadingSuccess = (code, { data, success }) => {
+    if(!success){
+      this.setState({
+        isLoading: false,
+        data: undefined,
+        error: this.errors.fetch
+      });
+    } else {
+      const hasData = typeof data[code] !== 'undefined' && data[code].length > 0
+      this.setState({
+        isLoading: false,
+        data: hasData ? {
+          code,
+          metadata: data[code]
+        } : undefined,
+        error: undefined
+      });
+    }
+  }
+
+  registerProduct = () => {
+    const { data } = this.state;
+    this.props.navigation.navigate('Register', { data });
   }
 
   loadScanData = () => {
@@ -134,11 +139,22 @@ export default class ScanDisplayScreen extends React.Component {
               </Text>
             </View>
         }
-        <Button
-          style={ styles.button }
-          title={ isLoading ? 'Cancel' : 'Scan Another' }
-          onPress={ this.navigateToScan }
-        />
+        <View style={ styles.buttonView }>
+          {
+            hasData ?
+            <Button
+              style={ styles.button }
+              title='Register Product'
+              onPress={ this.registerProduct }
+            />
+            : null
+          }
+          <Button
+            style={ styles.button }
+            title={ isLoading ? 'Cancel' : 'Scan Another' }
+            onPress={ this.navigateToScan }
+          />
+        </View>
       </Screen>
     );
   }
