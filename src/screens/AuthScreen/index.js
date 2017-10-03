@@ -32,7 +32,7 @@ export default class AuthScreen extends React.Component {
     AsyncStorage.setItem(this.props.storageKey, appState)
       .then(() => {
         // Navigate to the scan screen
-        this.props.navigation.navigate('Scan');
+        this.props.navigation.navigate('Dashboard');
       });
   }
 

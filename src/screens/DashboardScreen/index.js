@@ -4,6 +4,34 @@ import { NavigationActions } from 'react-navigation';
 import { NavHeader, Screen } from '../../components';
 import styles from './styles';
 
+const NavigationItem = ({ imageSrc, title, help, onPress, style }) => (
+  <TouchableHighlight
+    style={ styles.navigation__container }
+    onPress={ onPress }
+  >
+    <View style={ style }>
+      <Image
+        style={ styles.shadow }
+        source={ require('../../assets/images/top_shadow.png') }
+      />
+      <Image
+        style={ styles.rotated__shadow }
+        source={ require('../../assets/images/top_shadow.png') }
+      />
+      <View style={ styles.item__image }>
+        <Image
+          style={ styles.image }
+          source={ imageSrc }
+        />
+      </View>
+      <View style={ styles.item__text }>
+        <Text style={ styles.text }>{ title }</Text>
+        <Text style={ styles.text__help }>{ help }</Text>
+      </View>
+    </View>
+  </TouchableHighlight>
+);
+
 export default class DashboardScreen extends React.Component {
 
   navigateToSettings = () => {
@@ -30,82 +58,34 @@ export default class DashboardScreen extends React.Component {
         header={ <NavHeader { ...this.props } /> }
       >
         <View style={ styles.navigation }>
-          <TouchableHighlight
-            style={ styles.navigation__container }
+          <NavigationItem
+            imageSrc={ require('../../assets/images/scan_white.png') }
+            title="Tap Tag"
+            help="Use your NFC reader to tap a tag and read associated information"
             onPress={ this.navigateToScan }
-          >
-            <View style={ styles.scan__navigation }>
-              <View style={ styles.item__image }>
-                <Image
-                  style={ styles.image }
-                  source={ require('../../assets/images/scan_white.png') }
-                />
-              </View>
-              <View style={ styles.item__text }>
-                <Text style={ styles.text }>Tap Tag</Text>
-                <Text style={ styles.text__help }>
-                  Use your NFC reader to tap a tag and read associated information
-                </Text>
-              </View>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={ styles.navigation__container }
+            style={ styles.scan__navigation }
+          />
+          <NavigationItem
+            imageSrc={ require('../../assets/images/user_tags_white.png') }
+            title="My Registrations"
+            help="View your personalized tag registrations"
             onPress={ this.navigateToRegistrations }
-          >
-            <View style={ styles.registrations__navigation }>
-              <View style={ styles.item__image }>
-                <Image
-                  style={ styles.image }
-                  source={ require('../../assets/images/user_tags_white.png') }
-                />
-              </View>
-              <View style={ styles.item__text }>
-                <Text style={ styles.text }>My Registrations</Text>
-                <Text style={ styles.text__help }>
-                  View your personalized tag registrations
-                </Text>
-              </View>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={ styles.navigation__container }
+            style={ styles.registrations__navigation }
+          />
+          <NavigationItem
+            imageSrc={ require('../../assets/images/settings_white.png') }
+            title="Settings"
+            help="Manage your application preferences"
             onPress={ this.navigateToSettings }
-          >
-            <View style={ styles.settings__navigation }>
-              <View style={ styles.item__image }>
-                <Image
-                  style={ styles.image }
-                  source={ require('../../assets/images/settings_white.png') }
-                />
-              </View>
-              <View style={ styles.item__text }>
-                <Text style={ styles.text }>Settings</Text>
-                <Text style={ styles.text__help }>
-                  Manage your application preferences
-                </Text>
-              </View>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={ styles.navigation__container }
-            onPress={ this.navigateToHelp }
-          >
-            <View style={ styles.help__navigation }>
-              <View style={ styles.item__image }>
-                <Image
-                  style={ styles.image }
-                  source={ require('../../assets/images/help_white.png') }
-                />
-              </View>
-              <View style={ styles.item__text }>
-                <Text style={ styles.text }>Help</Text>
-                <Text style={ styles.text__help }>
-                  View a quick run through of the application features
-                </Text>
-              </View>
-            </View>
-          </TouchableHighlight>
+            style={ styles.settings__navigation }
+          />
+          <NavigationItem
+            imageSrc={ require('../../assets/images/help_white.png') }
+            title="Help"
+            help="View a quick run through of the application features"
+            onPress={ this.navigateToSettings }
+            style={ styles.help__navigation }
+          />
         </View>
       </Screen>
     );

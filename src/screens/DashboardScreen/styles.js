@@ -79,6 +79,24 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1
+  },
+  shadow: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: -1,
+    top: 0,
+    left: 0
+  },
+  rotated__shadow: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: -1,
+    bottom: 0,
+    left: 0,
+    transform: [{ rotateX: '180deg' }],
+    opacity: 0.85
   }
 });
 
