@@ -9,7 +9,8 @@ import {
   ScanScreen,
   ScanDisplayScreen,
   SplashScreen,
-  ScanScreenIOS
+  ScanScreenIOS,
+  RegisterScreen
 } from './screens';
 
 /*
@@ -55,6 +56,7 @@ export default class LifecyclesAuthScan extends Component {
       Display: { screen: withGlobals(ScanDisplayScreen) },
       Dashboard: { screen: withGlobals(DashboardScreen) },
       Registrations: { screen: withGlobals(RegistrationsScreen) },
+      Register: { screen: withGlobals(RegisterScreen) }
     };
   }
 
