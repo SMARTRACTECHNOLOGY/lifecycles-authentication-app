@@ -1,6 +1,7 @@
 import { btoa } from './utils';
 import Auth0 from 'react-native-auth0';
 import credentials from '../auth0-credentials';
+import jwtDecode from 'jwt-decode';
 
 /*
 * HTTP Client that works w/ `fetch` and jwts
@@ -74,15 +75,15 @@ export default class HTTP {
   }
 
   setJwt = (credentials) => {
-    this.jwt = credentials.accessToken;
-    return credentials;
+    this.jwt = credentials.idToken;
+    return this.jwt;
   }
 
   authorizedHeaders = () => {
     return {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      authorization: `Bearer ${ this.jwt.accessToken }`
+      authorization: `Bearer ${ this.jwt }`
     };
   }
 
@@ -103,8 +104,15 @@ export default class HTTP {
     return Object.keys(params).map((key) => `&${key}=${params[key]}`).join('');
   }
 
+  /*
+  * Returns a decoded jwt for the http
+  */
+  context = () => {
+    return jwtDecode(this.jwt);
+  }
+
   isAuthenticated = () => {
-    return !!this.jwt.accessToken;
+    return !!this.jwt;
   }
 
   logout = () => {
@@ -120,7 +128,7 @@ export default class HTTP {
       return Promise.reject(new Error('jwt was undefined.'))
     }
     // Eventually make a call to an endpoint that will validate the token as valid
-    this.setJwt({ accessToken: jwt });
+    this.setJwt({ idToken: jwt });
     return Promise.resolve();
   }
 
@@ -129,7 +137,7 @@ export default class HTTP {
     return (
       this.auth0.webAuth
         .authorize({
-          scope: 'openid profile',
+          scope: 'openid profile email',
           audience: 'https://' + credentials.domain + '/userinfo'
         })
         .then(this.setJwt)

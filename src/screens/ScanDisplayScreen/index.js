@@ -1,5 +1,13 @@
 import React from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  BackHandler,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 import { Button, NavHeader, Screen } from '../../components';
 import theme from '../../theme';
 import styles from './styles';
@@ -29,7 +37,7 @@ export default class ScanDisplayScreen extends React.Component {
       error: this.errors.fetch
     });
   }
-  
+
   handleLoadingSuccess = (code, { data, message, code: errorCode }) => {
     if(message || typeof data === 'undefined'){
       this.setState({
@@ -52,10 +60,9 @@ export default class ScanDisplayScreen extends React.Component {
       });
     }
   }
-  
+
   registerProduct = () => {
     const { data } = this.state;
-    console.log(this.state)
     this.props.navigation.navigate('Register', { data });
   }
 
@@ -65,6 +72,19 @@ export default class ScanDisplayScreen extends React.Component {
     this.props.databroker.get('byTid', { tid: code })
       .then(this.handleLoadingSuccess.bind(this, code))
       .catch(this.handleLoadingError)
+  }
+
+  componentWillMount(){
+    /*
+    * We handle the back button action so we can remount the NFC listener thru React
+    * Lifecycles. Using the normal back button operation on the phone does not
+    * remount the Scan screen and thus no listener is spawned for the NFC
+    */
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.navigateToScan();
+      // Tell hardware we are handling the back button
+      return true;
+    });
   }
 
   componentDidMount(){

@@ -22,9 +22,9 @@ export default class AuthScreen extends React.Component {
     };
   }
 
-  handleAuthenticationSuccess = ({ accessToken }) => {
-    this.setState({ jwt: accessToken, isAuthenticating: false });
-    AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt: accessToken }))
+  handleAuthenticationSuccess = (jwt) => {
+    this.setState({ jwt, isAuthenticating: false });
+    AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt }))
       .then(() => {
         // Navigate to the scan screen
         this.props.navigation.navigate('Dashboard');
@@ -32,8 +32,7 @@ export default class AuthScreen extends React.Component {
   }
 
   handleAuthenicationError = error => {
-    this.setState({ isAuthenticating: false })
-    console.log(error)
+    this.setState({ isAuthenticating: false });
   }
 
   onLogin = () => {

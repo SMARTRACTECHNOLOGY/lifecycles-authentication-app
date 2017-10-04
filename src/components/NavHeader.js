@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AsyncStorage, Image, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Image, StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 import theme from '../theme';
 
@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: theme.color.primary
+  },
+  email: {
+    color: theme.color.white,
+    fontSize: 16
   }
 });
 
@@ -33,6 +37,7 @@ export default class  NavHeader extends React.Component {
 
   constructor(props){
     super(props);
+    this.maxLength = 30;
   }
 
   navigateToDashboard = () => {
@@ -57,8 +62,19 @@ export default class  NavHeader extends React.Component {
       });
   }
 
+  // Truncates email after 15 characters
+  formatEmail(email){
+    return (
+      email && email.length > this.maxLength ?
+        `${ email.substring(0, this.maxLength)}...`
+        :
+        email
+    );
+  }
+
   render(){
-    const { canGoBack = false } = this.props;
+    const { canGoBack = false, databroker } = this.props;
+    const { email } = databroker.context();
     return (
       <View style={ styles.container }>
         {
@@ -80,6 +96,7 @@ export default class  NavHeader extends React.Component {
                 onPress={ this.navigateToDashboard }
               />
         }
+        <Text style={ styles.email }>{ this.formatEmail(email) }</Text>
         <Button
           style={ styles.button }
           title="Logout"
