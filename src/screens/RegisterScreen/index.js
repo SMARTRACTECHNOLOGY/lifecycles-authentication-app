@@ -5,19 +5,19 @@ import { NavHeader, Screen, Registration} from '../../components';
 import styles from './styles';
 import theme from '../../theme';
 
-export default class RegistrationsScreen extends React.Component {
+export default class RegisterScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       error: null,
-      isAuthenticating: false
+      isRegistering: false
     }
   }
 
   handleRegistrationSuccess = () => {
     this.setState({
       error: undefined,
-      isAuthenticating: false
+      isRegistering: false
     });
     this.props.navigation.navigate('Dashboard');
   }
@@ -25,13 +25,13 @@ export default class RegistrationsScreen extends React.Component {
   handleRegistrationFailure = (error) => {
     this.setState({
       error: error,
-      isAuthenticating: false
+      isRegistering: false
     });
   }
 
   register = ({ ...productInfo }) => {
     this.setState({
-      isAuthenticating: true
+      isRegistering: true
     });
     const { code } = this.props.navigation.state.params.data
     const { appId, customerId } = this.props;
@@ -40,8 +40,8 @@ export default class RegistrationsScreen extends React.Component {
   }
 
   render(){
-    const { error, isAuthenticating } = this.state;
-    const loadingDisplay = isAuthenticating ? 'flex' : 'none';
+    const { error, isRegistering } = this.state;
+    const loadingDisplay = isRegistering ? 'flex' : 'none';
     const canGoBack = true
     const props = { canGoBack, ...this.props }
 
@@ -53,7 +53,7 @@ export default class RegistrationsScreen extends React.Component {
       >
         <View style={ [ styles.loading, { display: loadingDisplay }] }>
           <ActivityIndicator
-            animating={ isAuthenticating }
+            animating={ isRegistering }
             color={ theme.color.lightBackground }
             size={ theme.loading.size }
           />
