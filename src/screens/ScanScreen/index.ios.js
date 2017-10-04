@@ -1,11 +1,11 @@
 import React from 'react';
-import { AlertIOS, AsyncStorage, DeviceEventEmitter, Image, Platform, Text, View } from 'react-native';
+import { AlertIOS, AsyncStorage, DeviceEventEmitter, Image, Text, View } from 'react-native';
 import { NFCReader } from 'react-native-nfc-reader';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
 
 export default class ScanScreenIOS extends React.Component {
-  
+
   constructor(props){
     super(props);
     this.simulate = false;
@@ -43,7 +43,7 @@ export default class ScanScreenIOS extends React.Component {
         ]
       );
     }
-    
+
   }
 
   bindNfcListener() {

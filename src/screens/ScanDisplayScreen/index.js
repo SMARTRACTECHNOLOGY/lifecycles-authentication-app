@@ -74,19 +74,6 @@ export default class ScanDisplayScreen extends React.Component {
       .catch(this.handleLoadingError)
   }
 
-  componentWillMount(){
-    /*
-    * We handle the back button action so we can remount the NFC listener thru React
-    * Lifecycles. Using the normal back button operation on the phone does not
-    * remount the Scan screen and thus no listener is spawned for the NFC
-    */
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      this.navigateToScan();
-      // Tell hardware we are handling the back button
-      return true;
-    });
-  }
-
   componentDidMount(){
     this.loadScanData();
   }
