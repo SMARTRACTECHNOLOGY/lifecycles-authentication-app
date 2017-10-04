@@ -56,7 +56,7 @@ export default class ScanDisplayScreen extends React.Component {
   registerProduct = () => {
     const { data } = this.state;
     console.log(this.state)
-    this.props.navigation.navigate('Registrations', { data });
+    this.props.navigation.navigate('Register', { data });
   }
 
   loadScanData = () => {
