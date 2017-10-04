@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, BackHandler, Image, Platform, View } from 'react-native';
+import { AsyncStorage, Image, Platform, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Screen } from '../../components';
 import styles from './styles';
