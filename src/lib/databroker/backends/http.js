@@ -119,7 +119,12 @@ export default class HTTP {
     if(!this.jwt){
       return {};
     }
-    return { ...jwtDecode(this.jwt), jwt: this.jwt };
+    try {
+      const decodedJwt = jwtDecode(this.jwt);
+      return { ...decodedJwt, jwt: this.jwt };
+    } catch (err){
+      return {};
+    }
   }
 
   isAuthenticated = () => {
