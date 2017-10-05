@@ -116,7 +116,10 @@ export default class HTTP {
   * Returns a decoded jwt for the http
   */
   context = () => {
-    return jwtDecode(this.jwt);
+    if(!this.jwt){
+      return {};
+    }
+    return { ...jwtDecode(this.jwt), jwt: this.jwt };
   }
 
   isAuthenticated = () => {

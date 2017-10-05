@@ -7,20 +7,12 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: theme.color.lightBackground
   },
-  loading: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 1
-  },
   data: {
     height: '100%',
     width: '100%',
     zIndex: 2,
     padding: 10,
+    marginLeft: 20,
     marginTop: headerHeight
   },
   missing: {
@@ -52,10 +44,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10
   },
+  update__button: {
+    backgroundColor: theme.color.green
+  },
   sku: {
     color: theme.color.gray,
     fontSize: 28,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10
   },
   code: {
@@ -115,16 +110,15 @@ const styles = StyleSheet.create({
   },
   metadata__label: {
     display: 'flex',
-    fontWeight: 'bold',
     color: theme.color.lightGray,
-    fontSize: 24
+    fontSize: 20
   },
   metadata__value: {
     display: 'flex',
     paddingLeft: 20,
     flexGrow: 1,
     color: theme.color.black,
-    fontSize: 24
+    fontSize: 16
   }
 });
 
