@@ -28,7 +28,8 @@ export default class RegisterScreen extends React.Component {
       this.setState({
         error: undefined,
         isRegistering: false
-      }, () => this.props.navigation.navigate('Registrations'));
+      });
+      this.props.navigation.navigate('Registrations');
     }, 500);
   }
 
