@@ -74,9 +74,7 @@ export default class ScanDisplayScreen extends React.Component {
 
   registerProduct = () => {
     const { data } = this.state;
-    this.props.navigation.navigate('Register', {
-      product: data.product
-    });
+    this.props.navigation.navigate('Register', data);
   }
 
   updateRegistration = () => {
@@ -87,7 +85,7 @@ export default class ScanDisplayScreen extends React.Component {
   loadScanData = () => {
     // Retrieve tag metadata for tag, override the base service url since its not `/rest` for some reason
     const { applicationId, navigation } = this.props;
-    const tid = navigation.state.params.data;
+    const tid = navigation.state.params.tid;
     Promise.all([
       this.props.databroker.get('byTid', { tid }),
       this.props.databroker.get('getRegistration', { applicationId, tid })
@@ -102,7 +100,7 @@ export default class ScanDisplayScreen extends React.Component {
 
   render(){
     const { data, error, isLoading, registration } = this.state;
-    const tid = this.props.navigation.state.params.data;
+    const tid = this.props.navigation.state.params.tid;
     const hasData = typeof data !== 'undefined';
     if(isLoading){
       return <LoadingIndicator showing={ isLoading } />;
@@ -124,7 +122,7 @@ export default class ScanDisplayScreen extends React.Component {
                 />
               }
             >
-              <Text style={ styles.sku }>TAG <Text style={ styles.code }>{ tid }</Text></Text>
+              <Text style={ styles.tag }>TAG <Text style={ styles.code }>{ tid }</Text></Text>
               {
                 data.product &&
                   <View style={ styles.product }>
@@ -137,7 +135,7 @@ export default class ScanDisplayScreen extends React.Component {
                         { data.product.name }
                       </Text>
                       <Text style={ styles.info__description }>
-                        { data.product.description }
+                        { data.product.description || 'N/A' }
                       </Text>
                     </View>
                   </View>
@@ -152,7 +150,7 @@ export default class ScanDisplayScreen extends React.Component {
                     </View>
                     <View style={ styles.metadata__info }>
                       <Text style={ styles.metadata__label }>Description</Text>
-                      <Text style={ styles.metadata__value }>{ registration.description }</Text>
+                      <Text style={ styles.metadata__value }>{ registration.description || 'N/A' }</Text>
                     </View>
                   </View>
               }
@@ -179,7 +177,7 @@ export default class ScanDisplayScreen extends React.Component {
               <Text style={ styles.nothing }>
                 {
                   !error ?
-                    `No data found for SKU: ${ tid }`
+                    `No data found for TAG: ${ tid }`
                     :
                     error
                 }

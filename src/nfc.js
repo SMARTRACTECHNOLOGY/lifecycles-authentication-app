@@ -8,15 +8,9 @@ const handleAndroidNdef = ({ onTransition }, payload) => {
       ToastAndroid.show('NFC Tag Detected', ToastAndroid.SHORT);
       Vibration.vibrate();
       try {
-        const { data, id } = payload;
-        if(data && data.length){
-          const { type, data: code, encoding, locale } = data[0][0];
-          if (type === NdefRecordType.TEXT) {
-            // Add in navigation transition buffer
-            setTimeout(() => onTransition('Display', { data: code }), 300);
-          } else {
-            throw new Error(`Error: Tag (${type}, ${encoding}, ${locale}), is unsupported.`);
-          }
+        const { data, id: tid } = payload;
+        if(tid){
+          setTimeout(() => onTransition('Display', { tid }), 300);
         } else {
           throw new Error('Error: Tag record does not exist.');
         }
@@ -32,14 +26,9 @@ const handleAndroidNdef = ({ onTransition }, payload) => {
 
 const handleIOSNdef = ({ onTransition }, data) => {
   try {
-    const nfcData = data.filter(({ format, type, identifier, payload }) => (payload && payload !== null))
-    if (nfcData.length > 0) {
-      const { format, type, identifier, payload: code } = nfcData[0]
-      if (type === 'TEXT' || 'T') {
-        setTimeout(() => onTransition('Display', { data: code }), 300);
-      } else {
-        throw new Error(`Error: Tag (${type}), is unsupported.`);
-      }
+    const tid = data.filter(({ id }) => tid);
+    if (tid) {
+      setTimeout(() => onTransition('Display', { tid }), 300);
     } else {
       throw new Error('Error: Tag record does not exist.');
     }

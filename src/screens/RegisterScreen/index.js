@@ -16,7 +16,7 @@ export default class RegisterScreen extends React.Component {
     };
   }
 
-  handleRegistrationSuccess = (response) => {
+  handleRegistrationSuccess = (tid, response) => {
     const message = this.isUpdate() ? 'Registration Updated' : 'NFC Tag has Registered';
     if (Platform.OS === 'ios') {
       AlertIOS.alert( 'Register Complete', message);
@@ -29,7 +29,7 @@ export default class RegisterScreen extends React.Component {
         error: undefined,
         isRegistering: false
       });
-      this.props.navigation.navigate('Registrations');
+      this.props.navigation.navigate('Display', { tid });
     }, 500);
   }
 
@@ -53,14 +53,14 @@ export default class RegisterScreen extends React.Component {
     const { email } = databroker.backend.context();
     const data = {
       customerId: email,
-      applicationId,
       tid,
+      applicationId,
       imageUrl,
       ...productInfo
     };
     // Perform registration put
     databroker.put('registration', data)
-      .then(this.handleRegistrationSuccess)
+      .then(this.handleRegistrationSuccess.bind(this, tid))
       .catch(this.handleRegistrationFailure)
   }
 

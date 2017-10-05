@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   update__button: {
     backgroundColor: theme.color.green
   },
-  sku: {
+  tag: {
     color: theme.color.gray,
     fontSize: 28,
     marginTop: 5,
