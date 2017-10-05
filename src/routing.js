@@ -2,7 +2,9 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import { handleNfef, bindNFC, unbindNFC } from './nfc';
 
-const bound = false;
+// Just a single instance reference to use as a check for the NFC being bound/unbound
+// We could also just use the transition screen potentially but this is a little bit easier for now
+let bound = false;
 
 /*
 * Navigation abstraction that takes a `config` and renders a routing component

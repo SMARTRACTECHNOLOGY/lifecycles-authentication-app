@@ -10,14 +10,6 @@ const NavigationItem = ({ imageSrc, title, help, onPress, style }) => (
     onPress={ onPress }
   >
     <View style={ style }>
-      <Image
-        style={ styles.shadow }
-        source={ require('../../assets/images/top_shadow.png') }
-      />
-      <Image
-        style={ styles.rotated__shadow }
-        source={ require('../../assets/images/top_shadow.png') }
-      />
       <View style={ styles.item__image }>
         <Image
           style={ styles.image }

@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   BackHandler,
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -74,6 +75,16 @@ export default class ScanDisplayScreen extends React.Component {
       .catch(this.handleLoadingError)
   }
 
+  validImageUri(imageUri){
+    // Use placeholder when no imageUri is provided
+    if(!imageUri){
+      return false;
+    }
+    const isIOS = Platform.OS === 'ios';
+    // Android will work with whatever uri provided, ios needs https images
+    return !isIOS || (isIOS && imageUri.startsWith('https'));
+  }
+
   componentDidMount(){
     this.loadScanData();
   }
@@ -107,10 +118,18 @@ export default class ScanDisplayScreen extends React.Component {
               {
                 data.product &&
                   <View style={ styles.product }>
-                    <Image
-                      source={{ uri: data.product.imageUrl }}
-                      style={ styles.product__image }
-                    />
+                    {
+                      this.validImageUri(data.product.imageUrl) ?
+                        <Image
+                          source={{ uri: data.product.imageUrl }}
+                          style={ styles.product__image }
+                        />
+                        :
+                        <Image
+                          source={ require('../../assets/images/blank_image.png') }
+                          style={ styles.blank__image }
+                        />
+                    }
                     <View style={ styles.product__info }>
                       <Text style={ styles.info__name }>
                         { data.product.name }
