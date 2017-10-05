@@ -13,7 +13,7 @@ const baseNavigationItem = {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: theme.color.lightBackground,
+    backgroundColor: theme.color.primary,
     height: '100%',
     width: '100%'
   },

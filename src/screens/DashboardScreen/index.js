@@ -64,20 +64,25 @@ export default class DashboardScreen extends React.Component {
             onPress={ this.navigateToRegistrations }
             style={ styles.registrations__navigation }
           />
-          <NavigationItem
-            imageSrc={ require('../../assets/images/settings_white.png') }
-            title="Settings"
-            help="Manage your application preferences"
-            onPress={ this.navigateToSettings }
-            style={ styles.settings__navigation }
-          />
-          <NavigationItem
-            imageSrc={ require('../../assets/images/help_white.png') }
-            title="Help"
-            help="View a quick run through of the application features"
-            onPress={ this.navigateToSettings }
-            style={ styles.help__navigation }
-          />
+          {
+            /*
+            Remove unused navigation items for now
+            <NavigationItem
+              imageSrc={ require('../../assets/images/settings_white.png') }
+              title="Settings"
+              help="Manage your application preferences"
+              onPress={ this.navigateToSettings }
+              style={ styles.settings__navigation }
+            />
+            <NavigationItem
+              imageSrc={ require('../../assets/images/help_white.png') }
+              title="Help"
+              help="View a quick run through of the application features"
+              onPress={ this.navigateToSettings }
+              style={ styles.help__navigation }
+            />
+            */
+          }
         </View>
       </Screen>
     );
