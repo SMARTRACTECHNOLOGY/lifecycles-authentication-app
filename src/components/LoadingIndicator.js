@@ -14,19 +14,16 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 1
+    zIndex: 9999
   }
 });
 
-export default ({ showing }) => {
-  const loadingDisplay = showing ? 'flex' : 'none';
-  return (
-    <View style={ [ styles.loading, { display: loadingDisplay }] }>
-      <ActivityIndicator
-        animating={ showing }
-        color={ theme.color.lightBackground }
-        size={ theme.loading.size }
-      />
-    </View>
-  );
-};
+export default ({ showing }) => (
+  <View style={ [ styles.loading, { display: showing ? 'flex' : 'none' }] }>
+    <ActivityIndicator
+      animating={ showing }
+      color={ theme.color.lightBackground }
+      size={ theme.loading.size }
+    />
+  </View>
+);

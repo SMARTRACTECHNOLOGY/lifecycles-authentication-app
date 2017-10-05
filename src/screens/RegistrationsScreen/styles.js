@@ -12,7 +12,10 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     flexShrink: 0,
-    paddingLeft: 10
+    paddingLeft: 10,
+    borderBottomWidth: 1,
+    borderColor: theme.color.lightestGray,
+    borderStyle: 'solid'
   },
   title: {
     fontSize: 22,
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 125,
     backgroundColor: theme.color.white,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: theme.color.lightestGray,
     borderStyle: 'solid'
   },
@@ -63,12 +66,53 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   item__name: {
-    color: theme.color.black,
+    color: theme.color.gray,
     fontSize: 18
   },
   item__description: {
     color: theme.color.gray,
-    fontSize: 16
+    fontSize: 14
+  },
+  missing: {
+    height: '85%',
+    width: '100%',
+    zIndex: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: 60
+  },
+  error: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 100,
+    zIndex: 0,
+    fontSize: 24,
+    color: theme.color.error,
+    textAlign: 'center'
+  },
+  nothing: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 100
+  },
+  nothing__help: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 32,
+    color: theme.color.primary,
+    opacity: 0.5
+  },
+  nothing__image: {
+    height: '75%',
+    width: '75%',
+    opacity: 0.1
   }
 });
 

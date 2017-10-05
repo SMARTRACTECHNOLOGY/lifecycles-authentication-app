@@ -13,7 +13,8 @@ import {
   Button,
   LoadingIndicator,
   NavHeader,
-  Screen
+  Screen,
+  URLImage
 } from '../../components';
 import styles from './styles';
 
@@ -24,7 +25,8 @@ export default class ScanDisplayScreen extends React.Component {
     this.state = {
       isLoading: true,
       data: undefined,
-      error: undefined
+      error: undefined,
+      registration: undefined
     };
     this.errors = {
       fetch: 'There was an error fetching the tag metadata. Please Try Again.'
@@ -39,15 +41,17 @@ export default class ScanDisplayScreen extends React.Component {
     this.setState({
       isLoading: false,
       data: undefined,
+      registration: undefined,
       error: this.errors.fetch
     });
   }
 
-  handleLoadingSuccess = (code, { data, message, code: errorCode }) => {
+  handleLoadingSuccess = (tid, [{ data, message, code }, { data: registration }]) => {
     if(message || typeof data === 'undefined'){
       this.setState({
         isLoading: false,
         data: undefined,
+        registration: undefined,
         error: message
       });
     } else {
@@ -56,11 +60,12 @@ export default class ScanDisplayScreen extends React.Component {
       this.setState({
         isLoading: false,
         data: {
-          code,
+          tid,
           // Just get the last product to show
           product: product[product.length - 1],
           metadata
         },
+        registration,
         error: undefined
       });
     }
@@ -68,15 +73,26 @@ export default class ScanDisplayScreen extends React.Component {
 
   registerProduct = () => {
     const { data } = this.state;
-    this.props.navigation.navigate('Register', { data });
+    this.props.navigation.navigate('Register', {
+      product: data.product
+    });
+  }
+
+  updateRegistration = () => {
+    const { data, registration } = this.state;
+    this.props.navigation.navigate('Register', { ...data, registration });
   }
 
   loadScanData = () => {
     // Retrieve tag metadata for tag, override the base service url since its not `/rest` for some reason
-    const code = this.props.navigation.state.params.data;
-    this.props.databroker.get('byTid', { tid: code })
-      .then(this.handleLoadingSuccess.bind(this, code))
-      .catch(this.handleLoadingError)
+    const { applicationId, navigation } = this.props;
+    const tid = navigation.state.params.data;
+    Promise.all([
+      this.props.databroker.get('byTid', { tid }),
+      this.props.databroker.get('getRegistration', { applicationId, tid })
+    ])
+    .then(this.handleLoadingSuccess.bind(this, tid))
+    .catch(this.handleLoadingError)
   }
 
   componentDidMount(){
@@ -84,8 +100,8 @@ export default class ScanDisplayScreen extends React.Component {
   }
 
   render(){
-    const { data, error, isLoading } = this.state;
-    const code = this.props.navigation.state.params.data;
+    const { data, error, isLoading, registration } = this.state;
+    const tid = this.props.navigation.state.params.data;
     const hasData = typeof data !== 'undefined';
     if(isLoading){
       return <LoadingIndicator showing={ isLoading } />;
@@ -99,22 +115,14 @@ export default class ScanDisplayScreen extends React.Component {
         {
           hasData ?
             <ScrollView style={ styles.data }>
-              <Text style={ styles.sku }>SKU <Text style={ styles.code }>{ code }</Text></Text>
+              <Text style={ styles.sku }>TAG <Text style={ styles.code }>{ tid }</Text></Text>
               {
                 data.product &&
                   <View style={ styles.product }>
-                    {
-                      data.product.imageUrl ?
-                        <Image
-                          source={{ uri: data.product.imageUrl }}
-                          style={ styles.product__image }
-                        />
-                        :
-                        <Image
-                          source={ require('../../assets/images/blank_image.png') }
-                          style={ styles.blank__image }
-                        />
-                    }
+                    <URLImage
+                      url={ data.product.imageUrl }
+                      style={{ height: 100, width: 100 }}
+                    />
                     <View style={ styles.product__info }>
                       <Text style={ styles.info__name }>
                         { data.product.name }
@@ -122,6 +130,20 @@ export default class ScanDisplayScreen extends React.Component {
                       <Text style={ styles.info__description }>
                         { data.product.description }
                       </Text>
+                    </View>
+                  </View>
+              }
+              {
+                registration &&
+                  <View style={ styles.metadata }>
+                    <Text style={ styles.details }>Personal Registration</Text>
+                    <View style={ styles.metadata__info }>
+                      <Text style={ styles.metadata__label }>Name</Text>
+                      <Text style={ styles.metadata__value }>{ registration.name }</Text>
+                    </View>
+                    <View style={ styles.metadata__info }>
+                      <Text style={ styles.metadata__label }>Description</Text>
+                      <Text style={ styles.metadata__value }>{ registration.description }</Text>
                     </View>
                   </View>
               }
@@ -148,7 +170,7 @@ export default class ScanDisplayScreen extends React.Component {
               <Text style={ styles.nothing }>
                 {
                   !error ?
-                    `No data found for SKU: ${ code }`
+                    `No data found for SKU: ${ tid }`
                     :
                     error
                 }
@@ -157,11 +179,18 @@ export default class ScanDisplayScreen extends React.Component {
         }
         <View style={ styles.buttonView }>
            {
-            hasData && <Button
-              style={ styles.button }
-              title='Register Product'
-              onPress={ this.registerProduct }
-            />
+            hasData && !registration ?
+              <Button
+                style={ styles.button }
+                title='Register Product'
+                onPress={ this.registerProduct }
+              />
+              :
+              <Button
+                style={ [styles.button, styles.update__button] }
+                title='Update Registration'
+                onPress={ this.updateRegistration }
+              />
            }
           <Button
             style={ styles.button }

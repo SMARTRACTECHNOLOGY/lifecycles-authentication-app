@@ -24,10 +24,12 @@ const renderDefaultListItem = ({ id, onPressItem, title }) => (
   </TouchableOpacity>
 );
 
-class SelectList extends React.PureComponent {
+export default class SelectList extends React.PureComponent {
 
   // Use `id` attribute to determine the list item keys
-  extractKey = (item, index) => item.id;
+  extractKey = (item, index) => {
+    return (this.props.itemKey && item[this.props.itemKey]) || item.id;
+  }
 
   defaultRenderItem = ({ item }) => (
     <ListItem
@@ -35,7 +37,7 @@ class SelectList extends React.PureComponent {
       onPressItem={ this.props.onPressItem }
       title={ item.title }
     />
-  );
+  )
 
   render() {
     const { data, renderItem = renderDefaultListItem } = this.props;
@@ -47,6 +49,4 @@ class SelectList extends React.PureComponent {
       />
     );
   }
-}
-
-export default SelectList;
+};

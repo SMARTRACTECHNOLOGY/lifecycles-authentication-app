@@ -43,10 +43,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10
   },
+  update__button: {
+    backgroundColor: theme.color.green
+  },
   sku: {
     color: theme.color.gray,
     fontSize: 28,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10
   },
   code: {
@@ -106,16 +109,15 @@ const styles = StyleSheet.create({
   },
   metadata__label: {
     display: 'flex',
-    fontWeight: 'bold',
     color: theme.color.lightGray,
-    fontSize: 24
+    fontSize: 20
   },
   metadata__value: {
     display: 'flex',
     paddingLeft: 20,
     flexGrow: 1,
     color: theme.color.black,
-    fontSize: 24
+    fontSize: 16
   }
 });
 

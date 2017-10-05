@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { LoadingIndicator, NavHeader, Screen, SelectList } from '../../components';
+import { LoadingIndicator, NavHeader, Screen, SelectList, URLImage } from '../../components';
 import styles from './styles';
 
 export default class RegistrationsScreen extends React.Component {
@@ -12,47 +12,37 @@ export default class RegistrationsScreen extends React.Component {
       data: [],
       error: undefined
     };
+    this.errors = {
+      fetch: 'There was an error fetching your registered products. Please Try Again.'
+    };
   }
 
   navigateToScanDisplay = (tid) => {
     this.props.navigation.navigate('Display', { data: tid });
   }
 
+  handleRegistrationsSuccess = ({ data, message, code }) => {
+    const hasError = message || typeof data === 'undefined';
+    this.setState({
+      isLoading: false,
+      data: hasError ? [] : data,
+      error: hasError ? message : undefined
+    });
+  }
+
+  handleRegistrationsError = (error) => {
+    this.setState({
+      isLoading: false,
+      data: [],
+      error: this.errors.fetch
+    });
+  }
+
   loadRegistrations = () => {
-    setTimeout(() => {
-      this.setState({
-        isLoading: false,
-        data: [{
-          id: 'a',
-          tid: '12FA34D',
-          title: 'title 1',
-          name: 'qweqweqweqw',
-          description: 'bcbvcbcv',
-          imageUrl: 'http://demandware.edgesuite.net/sits_pod20-adidas/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/en_US/dwd42862da/zoom/CG3000_01_standard.jpg?sw=500&sfrm=jpg'
-        },
-        {
-          id: 'b',
-          tid: '12FA34D',
-          title: 'title 2',
-          name: 'sadasdasdas',
-          description: 'qweqweqweqw',
-          imageUrl: 'http://demandware.edgesuite.net/sits_pod20-adidas/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/en_US/dwd42862da/zoom/CG3000_01_standard.jpg?sw=500&sfrm=jpg'
-        },
-        {
-          id: 'c',
-          tid: '12FA34D',
-          title: 'title 3',
-          name: 'qweqweqweqw',
-          description: 'nmbmm',
-          imageUrl: ''
-        }]
-      });
-    }, 500);
-    /*
-    this.props.databroker.get('byTid', { tid: code })
-      .then(this.handleLoadingSuccess.bind(this, code))
-      .catch(this.handleLoadingError)
-    */
+    const { applicationId, databroker } = this.props;
+    databroker.get('listRegistrations', { applicationId })
+      .then(this.handleRegistrationsSuccess)
+      .catch(this.handleRegistrationsError)
   }
 
   renderItem = ({ item }) => {
@@ -60,18 +50,7 @@ export default class RegistrationsScreen extends React.Component {
     return (
       <TouchableOpacity onPress={ this.navigateToScanDisplay.bind(this, tid) }>
         <View style={ styles.list__item }>
-          {
-            imageUrl ?
-              <Image
-                source={{ uri: imageUrl }}
-                style={ styles.item__image }
-              />
-              :
-              <Image
-                source={ require('../../assets/images/blank_image.png') }
-                style={ styles.blank__image }
-              />
-          }
+          <URLImage url={ imageUrl } />
           <View style={ styles.item__meta }>
             <Text style={ styles.item__tid }>{ tid }</Text>
             <Text style={ styles.item__name }>{ name }</Text>
@@ -87,7 +66,7 @@ export default class RegistrationsScreen extends React.Component {
   }
 
   render(){
-    const { isLoading, data } = this.state;
+    const { data, error, isLoading } = this.state;
     if(isLoading){
       return <LoadingIndicator showing={ isLoading } />;
     }
@@ -101,10 +80,27 @@ export default class RegistrationsScreen extends React.Component {
           <View style={ styles.title__container }>
             <Text style={ styles.title }>My Registrations</Text>
           </View>
-          <SelectList
-            data={ data }
-            renderItem={ this.renderItem }
-          />
+          {
+            data && data.length > 0 ?
+              <SelectList
+                data={ data }
+                itemKey="tid"
+                renderItem={ this.renderItem }
+              />
+              :
+              !error ?
+                <View style={ styles.nothing }>
+                  <Image
+                    source={ require('../../assets/images/user_tags.png') }
+                    style={ styles.nothing__image }
+                  />
+                  <Text style={ styles.nothing__help }>No Registrations Found</Text>
+                </View>
+                :
+                <View style={ styles.missing }>
+                  <Text style={ styles.error }>{ error }</Text>
+                </View>
+          }
         </View>
       </Screen>
     );

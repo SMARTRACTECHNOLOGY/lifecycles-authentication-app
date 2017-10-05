@@ -1,9 +1,8 @@
 import React from 'react';
-import { ActivityIndicator, AlertIOS, AsyncStorage, Image, Platform, Text, ToastAndroid, View } from 'react-native';
+import { AlertIOS, Platform, Text, ToastAndroid, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { NavHeader, Screen, Registration} from '../../components';
+import { LoadingIndicator, NavHeader, Screen, Registration } from '../../components';
 import styles from './styles';
-import theme from '../../theme';
 
 export default class RegisterScreen extends React.Component {
   constructor (props) {
@@ -18,19 +17,19 @@ export default class RegisterScreen extends React.Component {
   }
 
   handleRegistrationSuccess = (response) => {
-    this.setState({
-      error: undefined,
-      isRegistering: false
-    });
+    const message = this.isUpdate() ? 'Registration Updated' : 'NFC Tag has Registered';
     if (Platform.OS === 'ios') {
-      AlertIOS.alert(
-        "Register Complete",
-        "NFC Tag has been Registered"
-      );
+      AlertIOS.alert( 'Register Complete', message);
     } else {
-      ToastAndroid.show('NFC Tag Registered', ToastAndroid.SHORT);
+      ToastAndroid.show(message, ToastAndroid.SHORT);
     }
-    this.props.navigation.navigate('Dashboard');
+    // Add slight delay for ES to have record saved
+    setTimeout(() => {
+      this.setState({
+        error: undefined,
+        isRegistering: false
+      }, () => this.props.navigation.navigate('Registrations'));
+    }, 500);
   }
 
   handleRegistrationFailure = (error) => {
@@ -40,43 +39,51 @@ export default class RegisterScreen extends React.Component {
     });
   }
 
+  isUpdate = () => {
+    return !!this.props.navigation.state.params.registration;
+  }
+
   register = ({ ...productInfo }) => {
     this.setState({
       isRegistering: true
     });
-    const { code, product:{ imageUrl } } = this.props.navigation.state.params.data
-    const { appId } = this.props;
-    const { email } = this.props.databroker.backend.context()
-    const data = { applicationId: appId, customerId: email, tid:code, imageUrl, ...productInfo }
-
-    this.props.databroker.put("registration", data, {})
+    const { applicationId, databroker, navigation } = this.props;
+    const { tid, product: { imageUrl }} = navigation.state.params;
+    const { email } = databroker.backend.context();
+    const data = {
+      customerId: email,
+      applicationId,
+      tid,
+      imageUrl,
+      ...productInfo
+    };
+    // Perform registration put
+    databroker.put('registration', data)
       .then(this.handleRegistrationSuccess)
       .catch(this.handleRegistrationFailure)
   }
 
   render(){
     const { error, isRegistering } = this.state;
-    const loadingDisplay = isRegistering ? 'flex' : 'none';
-    const canGoBack = true
-    const props = { canGoBack, ...this.props }
-
+    const { navigation } = this.props;
     return (
       <Screen
         id="register-screen"
         style={ styles.screen }
-        header={ <NavHeader { ...props } /> }
-      >
-        <View style={ [ styles.loading, { display: loadingDisplay }] }>
-          <ActivityIndicator
-            animating={ isRegistering }
-            color={ theme.color.lightBackground }
-            size={ theme.loading.size }
+        header={
+          <NavHeader
+            canGoBack={ true }
+            { ...this.props }
           />
-        </View>
+        }
+      >
+        <LoadingIndicator showing={ isRegistering } />
         <Registration
+          title="Register Product"
           error={ error }
           onSubmit={ this.register }
-          title="Describe Product"
+          initialValues={ navigation.state.params }
+          isUpdate={ this.isUpdate() }
         />
       </Screen>
     );

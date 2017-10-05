@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   button: {
-    height: 40,
-    width: '100%',
+    marginRight: 10,
+    marginLeft: 10,
     backgroundColor: theme.color.primary
   },
   input: {
@@ -61,13 +61,17 @@ const styles = StyleSheet.create({
 });
 
 export default class Registration extends React.Component {
-  constructor (props) {
-    super(props)
+
+  constructor(props) {
+    super(props);
+    const { initialValues: { registration = {}} } = props;
     this.state = {
-      name: null,
-      description: null,
+      name: undefined,
+      description: undefined,
+      imageUrl: undefined,
+      ...registration,
       behavior: 'padding'
-    }
+    };
   }
 
   handleTextChange = (key, text) => {
@@ -77,31 +81,29 @@ export default class Registration extends React.Component {
   }
 
   handleSubmit = () => {
-    const { onSubmit } = this.props;
-    this.handleKeyboardDismis()
-    onSubmit({...this.state});
+    const { name, description, imageUrl } = this.state;
+    // Just persisting name and description for now
+    this.props.onSubmit({ name, description });
+    this.handleKeyboardDismiss();
   }
 
-  handleKeyboardDismis = () => {
+  handleKeyboardDismiss = () => {
     Keyboard.dismiss();
   }
 
-  render () {
+  render() {
     const { name, description } = this.state;
-    const { error, title } = this.props;
+    const { error, title, isUpdate } = this.props;
     return (
-      
       <View style={ styles.register }>
-        {
-          title && <Text style={styles.title}>{ title }</Text>
-        }
+        { title && <Text style={styles.title}>{ title }</Text> }
         {
           error &&
             <View style={ styles.error }>
               <Text style={ styles.error__message }>{ error }</Text>
             </View>
         }
-        <TextInput 
+        <TextInput
           style={ styles.input }
           placeholder="Name"
           placeholderTextColor={ theme.color.gray }
@@ -110,7 +112,7 @@ export default class Registration extends React.Component {
           autoCorrect={ false }
           value={ name }
         />
-        <TextInput 
+        <TextInput
           style={ styles.textArea }
           placeholder="Description"
           placeholderTextColor={ theme.color.gray }
@@ -126,15 +128,15 @@ export default class Registration extends React.Component {
           blurOnSubmit={ true }
           onEndEditing={ this.handleKeyboardDismis }
         />
-        <KeyboardAvoidingView behavior={this.state.behavior}>
-          <Button 
+        <KeyboardAvoidingView behavior={ this.state.behavior }>
+          <Button
             style={ styles.button }
-            title="Register"
+            title={ isUpdate ? 'Update' : 'Register' }
             onPress={ this.handleSubmit }
           />
         </KeyboardAvoidingView>
       </View>
-      
+
     )
   }
 }
