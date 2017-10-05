@@ -1,5 +1,10 @@
 import React from 'react';
-import { AsyncStorage, Image, Keyboard, Text, ToastAndroid, Vibration, View } from 'react-native';
+import {
+  AsyncStorage,
+  Image,
+  Text,
+  View
+} from 'react-native';
 import { Button, NavHeader, Screen } from '../../components';
 import styles from './styles';
 

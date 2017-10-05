@@ -8,7 +8,6 @@ import {
   ScanScreen,
   ScanDisplayScreen,
   SplashScreen,
-  ScanScreenIOS,
   RegisterScreen
 } from './screens';
 
