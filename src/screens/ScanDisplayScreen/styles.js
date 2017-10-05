@@ -79,6 +79,13 @@ const styles = StyleSheet.create({
     height: 100,
     flexShrink: 0
   },
+  blank__image: {
+    display: 'flex',
+    width: 90,
+    height: 90,
+    flexShrink: 0,
+    opacity: 0.5
+  },
   product__info: {
     display: 'flex',
     width: '100%',

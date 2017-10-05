@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, Image, View } from 'react-native';
+import { AsyncStorage, Image, Platform, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Screen } from '../../components';
 import styles from './styles';
@@ -58,7 +58,7 @@ export default class SplashScreen extends React.Component {
       .then(this.checkJwt)
       .catch(this.setReady);
   }
-  
+
   componentDidMount(){
     this.loadApp();
   }

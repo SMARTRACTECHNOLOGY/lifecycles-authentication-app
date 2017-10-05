@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.transparent,
     height: '75%',
     width: '30%',
-    padding: '5%'
+    padding: '5%',
+    flexShrink: 0
   },
   image: {
     display: 'flex',
