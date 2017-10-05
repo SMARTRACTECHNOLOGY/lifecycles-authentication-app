@@ -4,6 +4,7 @@ import {
   BackHandler,
   Image,
   Platform,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -114,7 +115,15 @@ export default class ScanDisplayScreen extends React.Component {
       >
         {
           hasData ?
-            <ScrollView style={ styles.data }>
+            <ScrollView
+              style={ styles.data }
+              refreshControl={
+                <RefreshControl
+                  refreshing={ false }
+                  onRefresh={ this.loadScanData }
+                />
+              }
+            >
               <Text style={ styles.sku }>TAG <Text style={ styles.code }>{ tid }</Text></Text>
               {
                 data.product &&
@@ -178,20 +187,22 @@ export default class ScanDisplayScreen extends React.Component {
             </View>
         }
         <View style={ styles.buttonView }>
-           {
-            hasData && !registration ?
+          {
+            hasData && !registration &&
               <Button
                 style={ styles.button }
                 title='Register Product'
                 onPress={ this.registerProduct }
               />
-              :
+          }
+          {
+            hasData && registration &&
               <Button
                 style={ [styles.button, styles.update__button] }
                 title='Update Registration'
                 onPress={ this.updateRegistration }
               />
-           }
+          }
           <Button
             style={ styles.button }
             title={ isLoading ? 'Cancel' : 'Scan Another' }

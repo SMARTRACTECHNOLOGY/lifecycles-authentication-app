@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 2,
     padding: 10,
+    marginLeft: 20,
     marginTop: headerHeight
   },
   missing: {

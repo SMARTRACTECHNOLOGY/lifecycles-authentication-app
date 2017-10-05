@@ -9,7 +9,6 @@ export default class RegistrationsScreen extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      isRefreshing: false,
       data: [],
       error: undefined
     };
@@ -26,7 +25,6 @@ export default class RegistrationsScreen extends React.Component {
     const hasError = message || typeof data === 'undefined';
     this.setState({
       isLoading: false,
-      isRefreshing: false,
       data: hasError ? [] : data,
       error: hasError ? message : undefined
     });
@@ -35,17 +33,13 @@ export default class RegistrationsScreen extends React.Component {
   handleRegistrationsError = (error) => {
     this.setState({
       isLoading: false,
-      isRefreshing: false,
       data: [],
       error: this.errors.fetch
     });
   }
 
-  loadRegistrations = (isRefreshing) => {
+  loadRegistrations = () => {
     const { applicationId, databroker } = this.props;
-    if(isRefreshing){
-      this.setState({ isRefreshing: true });
-    }
     databroker.get('listRegistrations', { applicationId })
       .then(this.handleRegistrationsSuccess)
       .catch(this.handleRegistrationsError)
@@ -68,11 +62,11 @@ export default class RegistrationsScreen extends React.Component {
   }
 
   componentDidMount(){
-    this.loadRegistrations(false);
+    this.loadRegistrations();
   }
 
   render(){
-    const { data, error, isLoading, isRefreshing } = this.state;
+    const { data, error, isLoading } = this.state;
     if(isLoading){
       return <LoadingIndicator showing={ isLoading } />;
     }
@@ -94,7 +88,7 @@ export default class RegistrationsScreen extends React.Component {
                 renderItem={ this.renderItem }
                 refreshControl={
                   <RefreshControl
-                    refreshing={ isRefreshing }
+                    refreshing={ false }
                     onRefresh={ this.loadRegistrations }
                   />
                 }
