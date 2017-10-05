@@ -15,7 +15,6 @@ import {
   NavHeader,
   Screen
 } from '../../components';
-import theme from '../../theme';
 import styles from './styles';
 
 export default class ScanDisplayScreen extends React.Component {

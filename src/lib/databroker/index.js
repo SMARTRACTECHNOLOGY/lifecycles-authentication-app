@@ -42,7 +42,7 @@ class Databroker {
   isAuthenticated(){
     return this.backend.isAuthenticated();
   }
-
+  
   context(){
     return this.backend.context();
   }
