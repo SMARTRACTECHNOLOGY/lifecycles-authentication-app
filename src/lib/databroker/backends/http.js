@@ -22,8 +22,12 @@ export default class HTTP {
   }
 
   checkStatus = (response) => {
+    const contentLength = response.headers.get("content-length");
     const status = response.status;
     if(status >= 200 && status < 300) {
+      if (contentLength && contentLength === "0") {
+        return true
+      }
       return response[status == 204 ? "text" : "json"]();
     } else if(status === 401){
       // Set token undefined if `Unauthorized`

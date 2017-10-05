@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Button from './Button';
 import theme from '../theme';
 
@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   button: {
-    height: 50,
-    width: '75%',
+    height: 40,
+    width: '100%',
     backgroundColor: theme.color.primary
   },
   input: {
@@ -65,7 +65,8 @@ export default class Registration extends React.Component {
     super(props)
     this.state = {
       name: null,
-      description: null
+      description: null,
+      behavior: 'padding'
     }
   }
 
@@ -77,13 +78,19 @@ export default class Registration extends React.Component {
 
   handleSubmit = () => {
     const { onSubmit } = this.props;
+    this.handleKeyboardDismis()
     onSubmit({...this.state});
+  }
+
+  handleKeyboardDismis = () => {
+    Keyboard.dismiss();
   }
 
   render () {
     const { name, description } = this.state;
     const { error, title } = this.props;
     return (
+      
       <View style={ styles.register }>
         {
           title && <Text style={styles.title}>{ title }</Text>
@@ -114,13 +121,20 @@ export default class Registration extends React.Component {
           multiline={ true }
           editable={ true }
           maxLength={ 280 }
+          returnKeyType='done'
+          onSubmitEditing={ Keyboard.dismiss }
+          blurOnSubmit={ true }
+          onEndEditing={ this.handleKeyboardDismis }
         />
-        <Button 
-          style={ styles.button }
-          title="Register"
-          onPress={ this.handleSubmit }
-        />
+        <KeyboardAvoidingView behavior={this.state.behavior}>
+          <Button 
+            style={ styles.button }
+            title="Register"
+            onPress={ this.handleSubmit }
+          />
+        </KeyboardAvoidingView>
       </View>
+      
     )
   }
 }
