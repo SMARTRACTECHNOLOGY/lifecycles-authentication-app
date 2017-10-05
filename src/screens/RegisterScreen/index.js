@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, Image, Text, View } from 'react-native';
+import { ActivityIndicator, AlertIOS, AsyncStorage, Image, Platform, Text, ToastAndroid, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { NavHeader, Screen, Registration} from '../../components';
 import styles from './styles';
@@ -12,19 +12,30 @@ export default class RegisterScreen extends React.Component {
       error: null,
       isRegistering: false
     }
+    this.errors = {
+      register: 'Cannot Register Tag at this time. Please Try Again.'
+    };
   }
 
-  handleRegistrationSuccess = () => {
+  handleRegistrationSuccess = (response) => {
     this.setState({
       error: undefined,
       isRegistering: false
     });
+    if (Platform.OS === 'ios') {
+      AlertIOS.alert(
+        "Register Complete",
+        "NFC Tag has been Registered"
+      );
+    } else {
+      ToastAndroid.show('NFC Tag Registered', ToastAndroid.SHORT);
+    }
     this.props.navigation.navigate('Dashboard');
   }
 
   handleRegistrationFailure = (error) => {
     this.setState({
-      error: error,
+      error: this.errors.register,
       isRegistering: false
     });
   }
@@ -33,10 +44,14 @@ export default class RegisterScreen extends React.Component {
     this.setState({
       isRegistering: true
     });
-    const { code } = this.props.navigation.state.params.data
-    const { appId, customerId } = this.props;
-    const data = { appId, customerId, code, ...productInfo }
-    // Todo: Call endpoint to register
+    const { code, product:{ imageUrl } } = this.props.navigation.state.params.data
+    const { appId } = this.props;
+    const { email } = this.props.databroker.backend.context()
+    const data = { applicationId: appId, customerId: email, tid:code, imageUrl, ...productInfo }
+
+    this.props.databroker.put("registration", data, {})
+      .then(this.handleRegistrationSuccess)
+      .catch(this.handleRegistrationFailure)
   }
 
   render(){
