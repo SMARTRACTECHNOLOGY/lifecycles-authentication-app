@@ -75,16 +75,6 @@ export default class ScanDisplayScreen extends React.Component {
       .catch(this.handleLoadingError)
   }
 
-  validImageUri(imageUri){
-    // Use placeholder when no imageUri is provided
-    if(!imageUri){
-      return false;
-    }
-    const isIOS = Platform.OS === 'ios';
-    // Android will work with whatever uri provided, ios needs https images
-    return !isIOS || (isIOS && imageUri.startsWith('https'));
-  }
-
   componentDidMount(){
     this.loadScanData();
   }
@@ -119,7 +109,7 @@ export default class ScanDisplayScreen extends React.Component {
                 data.product &&
                   <View style={ styles.product }>
                     {
-                      this.validImageUri(data.product.imageUrl) ?
+                      data.product.imageUrl ?
                         <Image
                           source={{ uri: data.product.imageUrl }}
                           style={ styles.product__image }

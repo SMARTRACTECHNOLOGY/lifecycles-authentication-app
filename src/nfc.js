@@ -57,6 +57,7 @@ export const bindNFC = (props) => {
   Keyboard.dismiss();
   // Perform different operations for NFC depending on platform
   if(Platform.OS === 'ios'){
+    NFCReader.initialize()
     NFCReader.on(handleIOSNdef.bind(this, props));
   } else {
     NFC.addListener('NFC_CHIP', handleAndroidNdef.bind(this, props));
