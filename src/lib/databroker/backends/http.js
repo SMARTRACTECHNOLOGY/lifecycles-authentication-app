@@ -96,8 +96,12 @@ export default class HTTP {
     );
   }
 
-  constructUrl = (requestType = 'get', action, params = {}, opts = {}) => {
-    return `${ this.base }/${ this.mapping.base }/${ action }?${ this.createQueryParams(params)}`;
+  constructUrl = (requestType, action, params = {}, opts = {}) => {
+    return `${ this.base }/${ this.mapping.base }/${ action }`;
+  }
+
+  constructQueryParamUrl = (requestType, action, params = {}, opts = {}) => {
+    return `${ this.constructUrl(requestType, action, params, opts) }?${ this.createQueryParams(params)}`;
   }
 
   urlParams = (params) => {
@@ -145,9 +149,9 @@ export default class HTTP {
   }
 
   get = (action, params, opts) => {
-    console.debug('=== GET', action, params, opts, this.constructUrl('get', action, params, opts));
+    console.debug('=== GET', action, params, opts, this.constructQueryParamUrl('get', action, params, opts));
     return (
-      this.request(this.constructUrl('get', action, params, opts), {
+      this.request(this.constructQueryParamUrl('get', action, params, opts), {
         method: 'GET',
         headers: this.authorizedHeaders()
       })
@@ -155,6 +159,7 @@ export default class HTTP {
   }
 
   put = (action, params, opts) => {
+    console.debug('=== PUT', action, params, opts, this.constructUrl('put', action, params, opts));
     return (
       this.request(this.constructUrl('put', action, params, opts), {
         method: 'PUT',
