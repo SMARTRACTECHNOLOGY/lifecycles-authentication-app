@@ -78,6 +78,7 @@ export default class Registration extends React.Component {
 
   handleSubmit = () => {
     const { onSubmit } = this.props;
+    this.handleKeyboardDismis()
     onSubmit({...this.state});
   }
 
