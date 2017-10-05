@@ -40,12 +40,13 @@ export default class SelectList extends React.PureComponent {
   )
 
   render() {
-    const { data, renderItem = renderDefaultListItem } = this.props;
+    const { data, renderItem = renderDefaultListItem, refreshControl } = this.props;
     return (
       <FlatList
         data={ data }
         keyExtractor={ this.extractKey }
         renderItem={ renderItem }
+        refreshControl={ refreshControl }
       />
     );
   }

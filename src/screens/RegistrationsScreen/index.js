@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
 import { LoadingIndicator, NavHeader, Screen, SelectList, URLImage } from '../../components';
 import styles from './styles';
 
@@ -9,6 +9,7 @@ export default class RegistrationsScreen extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      isRefreshing: false,
       data: [],
       error: undefined
     };
@@ -25,6 +26,7 @@ export default class RegistrationsScreen extends React.Component {
     const hasError = message || typeof data === 'undefined';
     this.setState({
       isLoading: false,
+      isRefreshing: false,
       data: hasError ? [] : data,
       error: hasError ? message : undefined
     });
@@ -33,13 +35,17 @@ export default class RegistrationsScreen extends React.Component {
   handleRegistrationsError = (error) => {
     this.setState({
       isLoading: false,
+      isRefreshing: false,
       data: [],
       error: this.errors.fetch
     });
   }
 
-  loadRegistrations = () => {
+  loadRegistrations = (isRefreshing) => {
     const { applicationId, databroker } = this.props;
+    if(isRefreshing){
+      this.setState({ isRefreshing: true });
+    }
     databroker.get('listRegistrations', { applicationId })
       .then(this.handleRegistrationsSuccess)
       .catch(this.handleRegistrationsError)
@@ -62,11 +68,11 @@ export default class RegistrationsScreen extends React.Component {
   }
 
   componentDidMount(){
-    this.loadRegistrations();
+    this.loadRegistrations(false);
   }
 
   render(){
-    const { data, error, isLoading } = this.state;
+    const { data, error, isLoading, isRefreshing } = this.state;
     if(isLoading){
       return <LoadingIndicator showing={ isLoading } />;
     }
@@ -86,6 +92,12 @@ export default class RegistrationsScreen extends React.Component {
                 data={ data }
                 itemKey="tid"
                 renderItem={ this.renderItem }
+                refreshControl={
+                  <RefreshControl
+                    refreshing={ isRefreshing }
+                    onRefresh={ this.loadRegistrations }
+                  />
+                }
               />
               :
               !error ?
