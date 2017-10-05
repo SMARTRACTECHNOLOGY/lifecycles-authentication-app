@@ -62,11 +62,14 @@ export default class AuthScreen extends React.Component {
         <View style={ styles.container }>
           <Text style={styles.header}> You will be redirected for authentication.</Text>
           <Text style={styles.subtext}>{ "Please click the login button if the page doesn't load automatically" }</Text>
-          <Button
-            onPress={ this.onLogin }
-            style={ styles.button }
-            title="Log In"
-          />
+          {
+            !this.state.isAuthenticating &&
+              <Button
+                onPress={ this.onLogin }
+                style={ styles.button }
+                title="Log In"
+              />
+          }
         </View>
       </Screen>
     );
