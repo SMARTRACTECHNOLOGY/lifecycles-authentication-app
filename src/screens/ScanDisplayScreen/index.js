@@ -9,7 +9,12 @@ import {
   Text,
   View
 } from 'react-native';
-import { Button, NavHeader, Screen } from '../../components';
+import {
+  Button,
+  LoadingIndicator,
+  NavHeader,
+  Screen
+} from '../../components';
 import theme from '../../theme';
 import styles from './styles';
 
@@ -82,18 +87,9 @@ export default class ScanDisplayScreen extends React.Component {
   render(){
     const { data, error, isLoading } = this.state;
     const code = this.props.navigation.state.params.data;
-    const loadingDisplay = isLoading ? 'flex' : 'none';
     const hasData = typeof data !== 'undefined';
     if(isLoading){
-      return (
-        <View style={ [ styles.loading, { display: loadingDisplay }] }>
-          <ActivityIndicator
-            animating={ isLoading }
-            color={ theme.color.lightBackground }
-            size={ theme.loading.size }
-          />
-        </View>
-      )
+      return <LoadingIndicator showing={ isLoading } />;
     }
     return (
       <Screen
