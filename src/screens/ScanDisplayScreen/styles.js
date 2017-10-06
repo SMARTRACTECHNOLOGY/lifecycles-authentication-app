@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexDirection: 'row',
     zIndex: 4,
-    bottom: 10,
+    bottom: 5,
     height: 50,
     backgroundColor: theme.color.white,
     width: '100%'

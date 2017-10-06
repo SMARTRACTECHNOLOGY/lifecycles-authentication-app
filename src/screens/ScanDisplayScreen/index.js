@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AsyncStorage,
   ActivityIndicator,
   BackHandler,
   Image,
@@ -40,12 +41,25 @@ export default class ScanDisplayScreen extends React.Component {
   }
 
   handleLoadingError = (error) => {
-    this.setState({
-      isLoading: false,
-      data: undefined,
-      registration: undefined,
-      error: this.errors.fetch
-    });
+    if(error.code === 401){
+      this.props.databroker.logout()
+        .then(() => {
+          AsyncStorage.getItem(this.props.storageKey, (err, result) => {
+            // Remove jwt from storage but keep everything else
+            const navigateToAuth = () => this.props.navigation.navigate('Auth');
+            AsyncStorage.setItem(this.props.storageKey, JSON.stringify({}))
+              .then(navigateToAuth)
+              .catch(() => AsyncStorage.clear().then(navigateToAuth))
+          });
+        });
+    } else {
+      this.setState({
+        isLoading: false,
+        data: undefined,
+        registration: undefined,
+        error: this.errors.fetch
+      });
+    }
   }
 
   handleLoadingSuccess = (tid, [{ data, message, code }, { data: registration }]) => {

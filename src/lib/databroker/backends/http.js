@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
 */
 export default class HTTP {
 
-  constructor({ base, mapping, requestTimeout = 60000 }){
+  constructor({ base, mapping, requestTimeout = 60000, hooks }){
     this.auth0 = new Auth0(credentials);
     this.base = base;
     this.mapping = mapping;
@@ -19,6 +19,7 @@ export default class HTTP {
       401: 'Unauthorized',
       500: 'Internal Server Error'
     };
+    this.hooks = hooks;
   }
 
   checkStatus = (response) => {
@@ -32,7 +33,10 @@ export default class HTTP {
     } else if(status === 401){
       // Set token undefined if `Unauthorized`
       this.jwt = undefined;
-      throw new Error(this.errorCodes[status]);
+      const error = new Error(this.errorCodes[status]);
+      error.code = 401;
+      error.response = response;
+      throw error;
     } else if(status === 400){
       return (
         response.json()

@@ -24,10 +24,12 @@ export default class AuthScreen extends React.Component {
 
   handleAuthenticationSuccess = (jwt) => {
     this.setState({ jwt, isAuthenticating: false });
-    AsyncStorage.mergeItem(this.props.storageKey, JSON.stringify({ jwt }))
-      .then(() => {
-        // Navigate to the scan screen
-        this.props.navigation.navigate('Dashboard');
+    const stringifiedToken = JSON.stringify({ jwt });
+    AsyncStorage.mergeItem(this.props.storageKey, stringifiedToken)
+      .then(() => this.props.navigation.navigate('Dashboard'))
+      .catch((error) => {
+        AsyncStorage.setItem(this.props.storageKey, stringifiedToken)
+          .then(() => this.props.navigation.navigate('Dashboard'))
       });
   }
 
