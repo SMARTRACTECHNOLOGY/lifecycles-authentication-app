@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     height: 'auto',
     minHeight: 60,
     borderTopColor: theme.color.lightestGray,
-    borderTopWidth: 1
+    borderTopWidth: 1,
+    paddingTop: 5
   },
   metadata__label: {
     display: 'flex',

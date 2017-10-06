@@ -30,7 +30,8 @@ export default class ScanDisplayScreen extends React.Component {
       registration: undefined
     };
     this.errors = {
-      fetch: 'There was an error fetching the tag metadata. Please Try Again.'
+      fetch: 'There was an error fetching the tag metadata. Please Try Again.',
+      doesNotExist: 'The tag you are looking for does not exist.'
     };
   }
 
@@ -56,16 +57,16 @@ export default class ScanDisplayScreen extends React.Component {
         error: message
       });
     } else {
-      const hasData = Object.keys(data).length > 0;
-      console.log(tid, data, registration);
+      const hasData = data && data.product.length > 0;
       if(hasData){
         const { product, metadata } = data;
         this.setState({
           isLoading: false,
           data: {
             tid,
-            // Just get the last product to show
-            product: product[product.length - 1],
+            // Just get the most recent product to show
+            // In this case its in descending order from the backend
+            product: product[0],
             metadata
           },
           registration,
@@ -76,7 +77,7 @@ export default class ScanDisplayScreen extends React.Component {
           isLoading: false,
           data: undefined,
           registration: undefined,
-          error: `The TAG ${ tid } does not exist.`
+          error: this.errors.doesNotExist
         });
       }
     }
