@@ -26,8 +26,12 @@ const handleAndroidNdef = ({ onTransition }, payload) => {
 
 const handleIOSNdef = ({ onTransition }, data) => {
   try {
-    const tid = data.filter(({ id }) => tid);
-    if (tid) {
+    const nfcData = data.filter(({ format, type, identifier, payload }) => (payload && payload !== null))
+
+    if (nfcData.length > 0) {
+
+      const { tid, format, type, identifier, payload } = nfcData[0]
+
       setTimeout(() => onTransition('Display', { tid }), 300);
     } else {
       throw new Error('Error: Tag record does not exist.');
