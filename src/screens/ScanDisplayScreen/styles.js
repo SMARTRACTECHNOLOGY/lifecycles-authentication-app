@@ -36,9 +36,17 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonView:{
+    display: 'flex',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
     flexDirection: 'row',
     zIndex: 4,
-    bottom: 20
+    bottom: 10,
+    height: 50,
+    backgroundColor: theme.color.white,
+    width: '100%'
   },
   button: {
     marginRight: 10,
@@ -59,8 +67,8 @@ const styles = StyleSheet.create({
   },
   details: {
     color: theme.color.gray,
-    fontSize: 28,
-    marginBottom: 10
+    fontSize: 22,
+    marginBottom: 5
   },
   product: {
     display: 'flex',
@@ -96,29 +104,29 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   metadata: {
-    marginTop: 10
+    marginTop: 5
   },
   metadata__info: {
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     width: '100%',
-    height: 60,
+    height: 'auto',
+    minHeight: 60,
     borderTopColor: theme.color.lightestGray,
     borderTopWidth: 1
   },
   metadata__label: {
     display: 'flex',
     color: theme.color.lightGray,
-    fontSize: 20
+    fontSize: 16
   },
   metadata__value: {
     display: 'flex',
-    paddingLeft: 20,
     flexGrow: 1,
     color: theme.color.black,
-    fontSize: 16
+    fontSize: 14
   }
 });
 

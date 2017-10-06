@@ -101,7 +101,7 @@ export default class HTTP {
   }
 
   constructUrl = (requestType, action, params = {}, opts = {}) => {
-    return `${ this.base }/${ this.mapping.base }/${ action }`;
+    return `${ this.base }${ this.mapping.base }/${ action }`;
   }
 
   constructQueryParamUrl = (requestType, action, params = {}, opts = {}) => {

@@ -57,18 +57,28 @@ export default class ScanDisplayScreen extends React.Component {
       });
     } else {
       const hasData = Object.keys(data).length > 0;
-      const { product, metadata } = data;
-      this.setState({
-        isLoading: false,
-        data: {
-          tid,
-          // Just get the last product to show
-          product: product[product.length - 1],
-          metadata
-        },
-        registration,
-        error: undefined
-      });
+      console.log(tid, data, registration);
+      if(hasData){
+        const { product, metadata } = data;
+        this.setState({
+          isLoading: false,
+          data: {
+            tid,
+            // Just get the last product to show
+            product: product[product.length - 1],
+            metadata
+          },
+          registration,
+          error: undefined
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          data: undefined,
+          registration: undefined,
+          error: `The TAG ${ tid } does not exist.`
+        });
+      }
     }
   }
 

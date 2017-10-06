@@ -15,10 +15,11 @@ export default class RegistrationsScreen extends React.Component {
     this.errors = {
       fetch: 'There was an error fetching your registered products. Please Try Again.'
     };
+    this.maxStringLength = 45;
   }
 
   navigateToScanDisplay = (tid) => {
-    this.props.navigation.navigate('Display', { data: tid });
+    this.props.navigation.navigate('Display', { tid });
   }
 
   handleRegistrationsSuccess = ({ data, message, code }) => {
@@ -45,6 +46,13 @@ export default class RegistrationsScreen extends React.Component {
       .catch(this.handleRegistrationsError)
   }
 
+  truncate(string){
+      if(string.length > this.maxStringLength){
+        return `${ string.substring(0, this.maxStringLength) }...`
+      }
+      return string;
+  }
+
   renderItem = ({ item }) => {
     const { id, tid, name, description, imageUrl } = item;
     return (
@@ -54,7 +62,7 @@ export default class RegistrationsScreen extends React.Component {
           <View style={ styles.item__meta }>
             <Text style={ styles.item__tid }>{ tid }</Text>
             <Text style={ styles.item__name }>{ name }</Text>
-            <Text style={ styles.item__description }>{ description }</Text>
+            <Text style={ styles.item__description }>{ this.truncate(description) }</Text>
           </View>
         </View>
       </TouchableOpacity>
