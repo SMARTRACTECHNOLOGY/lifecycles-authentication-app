@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class  NavHeader extends React.Component {
+export default class NavHeader extends React.Component {
 
   constructor(props){
     super(props);

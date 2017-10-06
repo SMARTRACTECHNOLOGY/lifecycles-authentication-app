@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AsyncStorage,
   ActivityIndicator,
   BackHandler,
   Image,
@@ -30,7 +31,8 @@ export default class ScanDisplayScreen extends React.Component {
       registration: undefined
     };
     this.errors = {
-      fetch: 'There was an error fetching the tag metadata. Please Try Again.'
+      fetch: 'There was an error fetching the tag metadata. Please Try Again.',
+      doesNotExist: 'The tag you are looking for does not exist.'
     };
   }
 
@@ -39,12 +41,25 @@ export default class ScanDisplayScreen extends React.Component {
   }
 
   handleLoadingError = (error) => {
-    this.setState({
-      isLoading: false,
-      data: undefined,
-      registration: undefined,
-      error: this.errors.fetch
-    });
+    if(error.code === 401){
+      this.props.databroker.logout()
+        .then(() => {
+          AsyncStorage.getItem(this.props.storageKey, (err, result) => {
+            // Remove jwt from storage but keep everything else
+            const navigateToAuth = () => this.props.navigation.navigate('Auth');
+            AsyncStorage.setItem(this.props.storageKey, JSON.stringify({}))
+              .then(navigateToAuth)
+              .catch(() => AsyncStorage.clear().then(navigateToAuth))
+          });
+        });
+    } else {
+      this.setState({
+        isLoading: false,
+        data: undefined,
+        registration: undefined,
+        error: this.errors.fetch
+      });
+    }
   }
 
   handleLoadingSuccess = (tid, [{ data, message, code }, { data: registration }]) => {
@@ -56,19 +71,29 @@ export default class ScanDisplayScreen extends React.Component {
         error: message
       });
     } else {
-      const hasData = Object.keys(data).length > 0;
-      const { product, metadata } = data;
-      this.setState({
-        isLoading: false,
-        data: {
-          tid,
-          // Just get the last product to show
-          product: product[product.length - 1],
-          metadata
-        },
-        registration,
-        error: undefined
-      });
+      const hasData = data && data.product.length > 0;
+      if(hasData){
+        const { product, metadata } = data;
+        this.setState({
+          isLoading: false,
+          data: {
+            tid,
+            // Just get the most recent product to show
+            // In this case its in descending order from the backend
+            product: product[0],
+            metadata
+          },
+          registration,
+          error: undefined
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          data: undefined,
+          registration: undefined,
+          error: this.errors.doesNotExist
+        });
+      }
     }
   }
 
