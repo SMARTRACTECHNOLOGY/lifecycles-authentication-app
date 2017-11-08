@@ -112,7 +112,7 @@ export default class ScanDisplayScreen extends React.Component {
     const { applicationId, navigation } = this.props;
     const tid = navigation.state.params.tid;
     Promise.all([
-      this.props.databroker.get('byTid', { tid }),
+      this.props.databroker.get('tagInfo', { tid }),
       this.props.databroker.get('getRegistration', { applicationId, tid })
     ])
     .then(this.handleLoadingSuccess.bind(this, tid))

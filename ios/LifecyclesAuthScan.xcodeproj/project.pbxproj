@@ -37,12 +37,9 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		86714680FFEA471A93C0D232 /* libA0Auth0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C3222401CA842D787D263BA /* libA0Auth0.a */; };
-		D06458541F7D21CE00955C1A /* (null) in Sources */ = {isa = PBXBuildFile; };
-		D06458551F7D21CE00955C1A /* (null) in Sources */ = {isa = PBXBuildFile; };
-		D06458561F7D21CE00955C1A /* (null) in Sources */ = {isa = PBXBuildFile; };
-		D0B5C4FE1F83F4BA0082A2D8 /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C4FA1F83F4BA0082A2D8 /* NFCReader.swift */; };
-		D0B5C4FF1F83F4BA0082A2D8 /* NFCReaderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C4FB1F83F4BA0082A2D8 /* NFCReaderBridge.m */; };
-		D0B5C5001F83F4BA0082A2D8 /* NFCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C4FC1F83F4BA0082A2D8 /* NFCHelper.swift */; };
+		D0F8DC981FB3820B00F0000B /* NFCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DC941FB3820B00F0000B /* NFCHelper.swift */; };
+		D0F8DC991FB3820B00F0000B /* ReactNativeNFCBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DC951FB3820B00F0000B /* ReactNativeNFCBridge.m */; };
+		D0F8DC9A1FB3820B00F0000B /* ReactNativeNFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DC961FB3820B00F0000B /* ReactNativeNFC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,7 +270,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -300,10 +296,10 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CCD17DFD2D7A423F982F2209 /* A0Auth0.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = A0Auth0.xcodeproj; path = "../node_modules/react-native-auth0/ios/A0Auth0.xcodeproj"; sourceTree = "<group>"; };
 		D0B5C4F91F83F4950082A2D8 /* LifecyclesAuthScan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LifecyclesAuthScan.entitlements; path = LifecyclesAuthScan/LifecyclesAuthScan.entitlements; sourceTree = "<group>"; };
-		D0B5C4FA1F83F4BA0082A2D8 /* NFCReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCReader.swift; path = "../node_modules/react-native-nfc-reader/NFCReader.swift"; sourceTree = "<group>"; };
-		D0B5C4FB1F83F4BA0082A2D8 /* NFCReaderBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NFCReaderBridge.m; path = "../node_modules/react-native-nfc-reader/NFCReaderBridge.m"; sourceTree = "<group>"; };
-		D0B5C4FC1F83F4BA0082A2D8 /* NFCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCHelper.swift; path = "../node_modules/react-native-nfc-reader/NFCHelper.swift"; sourceTree = "<group>"; };
-		D0B5C4FD1F83F4BA0082A2D8 /* NFCReader-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NFCReader-Bridging-Header.h"; path = "../node_modules/react-native-nfc-reader/NFCReader-Bridging-Header.h"; sourceTree = "<group>"; };
+		D0F8DC941FB3820B00F0000B /* NFCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFCHelper.swift; path = "../node_modules/@smartractechnology/react-native-rfid-nfc/ios/NFCHelper.swift"; sourceTree = "<group>"; };
+		D0F8DC951FB3820B00F0000B /* ReactNativeNFCBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReactNativeNFCBridge.m; path = "../node_modules/@smartractechnology/react-native-rfid-nfc/ios/ReactNativeNFCBridge.m"; sourceTree = "<group>"; };
+		D0F8DC961FB3820B00F0000B /* ReactNativeNFC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactNativeNFC.swift; path = "../node_modules/@smartractechnology/react-native-rfid-nfc/ios/ReactNativeNFC.swift"; sourceTree = "<group>"; };
+		D0F8DC971FB3820B00F0000B /* ReactNativeNFC-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ReactNativeNFC-Bridging-Header.h"; path = "../node_modules/@smartractechnology/react-native-rfid-nfc/ios/ReactNativeNFC-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,12 +435,11 @@
 		13B07FAE1A68108700A75B9A /* LifecyclesAuthScan */ = {
 			isa = PBXGroup;
 			children = (
-				D0B5C4FC1F83F4BA0082A2D8 /* NFCHelper.swift */,
-				D0B5C4FD1F83F4BA0082A2D8 /* NFCReader-Bridging-Header.h */,
-				D0B5C4FA1F83F4BA0082A2D8 /* NFCReader.swift */,
-				D0B5C4FB1F83F4BA0082A2D8 /* NFCReaderBridge.m */,
+				D0F8DC941FB3820B00F0000B /* NFCHelper.swift */,
+				D0F8DC971FB3820B00F0000B /* ReactNativeNFC-Bridging-Header.h */,
+				D0F8DC961FB3820B00F0000B /* ReactNativeNFC.swift */,
+				D0F8DC951FB3820B00F0000B /* ReactNativeNFCBridge.m */,
 				D0B5C4F91F83F4950082A2D8 /* LifecyclesAuthScan.entitlements */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1031,14 +1026,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D06458561F7D21CE00955C1A /* (null) in Sources */,
-				D0B5C5001F83F4BA0082A2D8 /* NFCHelper.swift in Sources */,
-				D0B5C4FF1F83F4BA0082A2D8 /* NFCReaderBridge.m in Sources */,
+				D0F8DC9A1FB3820B00F0000B /* ReactNativeNFC.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				D0B5C4FE1F83F4BA0082A2D8 /* NFCReader.swift in Sources */,
+				D0F8DC981FB3820B00F0000B /* NFCHelper.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				D06458541F7D21CE00955C1A /* (null) in Sources */,
-				D06458551F7D21CE00955C1A /* (null) in Sources */,
+				D0F8DC991FB3820B00F0000B /* ReactNativeNFCBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,6 +1143,7 @@
 				CODE_SIGN_ENTITLEMENTS = LifecyclesAuthScan/LifecyclesAuthScan.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = KNDXTF2ML2;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
@@ -1165,7 +1158,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartrac.smartcosmos.LifecyclesAuthScan;
 				PRODUCT_NAME = LifecyclesAuthScan;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/alexanderobi/smatrac/lifecycles-authentication-app/node_modules/react-native-nfc-reader/NFCReader-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/alexanderobi/smartrac/lifecycles-authentication-app/node_modules/@smartractechnology/react-native-rfid-nfc/ios/ReactNativeNFC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1179,6 +1172,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LifecyclesAuthScan/LifecyclesAuthScan.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KNDXTF2ML2;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
@@ -1193,7 +1187,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartrac.smartcosmos.LifecyclesAuthScan;
 				PRODUCT_NAME = LifecyclesAuthScan;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/alexanderobi/smatrac/lifecycles-authentication-app/node_modules/react-native-nfc-reader/NFCReader-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/alexanderobi/smartrac/lifecycles-authentication-app/node_modules/@smartractechnology/react-native-rfid-nfc/ios/ReactNativeNFC-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
