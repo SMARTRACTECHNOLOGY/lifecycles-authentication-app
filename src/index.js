@@ -31,7 +31,7 @@ const withGlobals = (
     applicationId: "ab8df67e-c13b-4aec-ab72-74336b40b111",
     databroker: new Databroker({
       type: 'http',
-      base: process.env.base || 'https://beta.lifecycles.io',
+      base: process.env.base || 'https://demo.lifecycles.io',
       mapping: {
         base: '/utilize/v1'
       }
