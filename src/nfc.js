@@ -1,6 +1,5 @@
 import NFC, { NfcDataType, NdefRecordType } from '@smartractechnology/react-native-rfid-nfc';
 import { AlertIOS, Keyboard, Platform, ToastAndroid, Vibration } from 'react-native';
-import { NFCReader } from 'react-native-nfc-reader';
 
 const handleAndroidNdef = ({ onTransition }, payload) => {
   switch (payload.type) {
@@ -40,7 +39,7 @@ const handleIOSNdef = ({ onTransition }, data) => {
     AlertIOS.alert(
       "NFC Tag Error",
       error.message,
-      [{text: 'OK', onPress: () => NFCReader.initialize()}]
+      [{text: 'OK', onPress: () => NFC.initialize()}]
     );
   }
 };
@@ -50,8 +49,8 @@ export const bindNFC = (props) => {
   Keyboard.dismiss();
   // Perform different operations for NFC depending on platform
   if(Platform.OS === 'ios'){
-    NFCReader.initialize()
-    NFCReader.on(handleIOSNdef.bind(this, props));
+    NFC.initialize()
+    NFC.addListenerIOS(handleIOSNdef.bind(this, props));
   } else {
     NFC.addListener('NFC_CHIP', handleAndroidNdef.bind(this, props));
   }
@@ -59,7 +58,7 @@ export const bindNFC = (props) => {
 
 export const unbindNFC = () => {
   if(Platform.OS === 'ios'){
-    NFCReader.removeNFCListeners()
+    NFC.removeListenerIOS()
   } else {
     NFC.removeListener('NFC_CHIP');
   }

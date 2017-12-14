@@ -10,19 +10,19 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleTypeRole</key>
-      <string>None</string>
-      <key>CFBundleURLName</key>
-      <string>auth0</string>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-      </array>
-    </dict>
-  </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>CFBundleURLName</key>
+			<string>auth0</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -37,17 +37,6 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>
@@ -64,8 +53,8 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>NFCReaderUsageDescription</key>
-  <string>NFC NDEF Reading.</string>
+	<key>NFCReaderUsageDescription</key>
+	<string>NFC NDEF Reading.</string>
   <key>NSAppTransportSecurity</key>
   <dict>
     <!--Include to allow all connections (DANGER)-->
